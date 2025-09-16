@@ -1,55 +1,137 @@
 export const RoboData2=[
     {
-        id:"SRV",
+        type:"SRV",
+        s_no:"SRV-01",
+        roboid:"Robot 1",
         image:"/SurvellianceRobo1.png",
         name:"SurvellianceRobot-01",
         status:"Idle",
         battery:"72",
         location:"My Home Appartments",
-    },
+        health:"50%",
+        temperature:"23°c",
+        alerts:[
+            "Motion detected Unauthorized moment in sector....",
+            "Motion detected Unauthorized moment in sector....",
+            "Motion detected Unauthorized moment in sector...."
+        ],
+        avg_speed:"50",
+        current_speed:"0",
+        signal_strength:"Good",
+        event_logs:["",""],
+        
+           
+
+            },
     {
-        id:"SRV",
+        type:"SRV",
+        s_no:"SRV-02",
+        roboid:"Robot 2",
         image:"/SurvellianceRobo2.png",
         name:"SurvellianceRobot-02",
-        status:"Idle",
+        status:"Patrolling",
         battery:"50",
         location:"My Home Appartments",
+        health:"97%",
+        temperature:"23°c",
+       alerts:[
+            "Motion detected Unauthorized moment in sector....",
+            "Motion detected Unauthorized moment in sector....",
+            "Motion detected Unauthorized moment in sector...."
+        ],
+        avg_speed:"50",
+        current_speed:"37",
+        signal_strength:"Good",
+        event_logs:[]
+
 
     },
     {
-        id:"SRV",
+        type:"SRV",
+        s_no:"SRV-03",
+        roboid:"Robot 3",
         image:"/SurvellianceRobo3.png",
         name:"SurvellianceRobot-03",
         status:"Idle",
         battery:"23",
         location:"My Home Appartments",
+        health:"70%",
+        temperature:"23°c",
+       alerts:[
+            "Motion detected Unauthorized moment in sector....",
+            "Motion detected Unauthorized moment in sector....",
+            "Motion detected Unauthorized moment in sector...."
+        ],
+        avg_speed:"50",
+        current_speed:"0",
+        signal_strength:"Good",
+        event_logs:[]
 
     },
     {
-        id:"SRV",
+        type:"SRV",
+        s_no:"SRV-04",
+        roboid:"Robot 4",
         image:"/SurvellianceRobo4.png",
         name:"SurvellianceRobot-04",
-        status:"Idle",
+        status:"Patrolling",
         battery:"90",
         location:"My Home Appartments",
+        health:"90%",
+        temperature:"20°c",
+       alerts:[
+            "Motion detected Unauthorized moment in sector....",
+            "Motion detected Unauthorized moment in sector....",
+            "Motion detected Unauthorized moment in sector...."
+        ],
+        avg_speed:"50",
+        current_speed:"29",
+        signal_strength:"Good",
+        event_logs:[]
 
     },
         {
-        id:"SRV",
+        type:"SRV",
+        s_no:"SRV-05",
+        roboid:"Robot 5",
         image:"/SurvellianceRobo3.png",
         name:"SurvellianceRobot-05",
         status:"Idle",
         battery:"23",
         location:"My Home Appartments",
+        health:"80%",
+        temperature:"27°c",
+        alerts:[
+            "Motion detected Unauthorized moment in sector....",
+            "Motion detected Unauthorized moment in sector....",
+            "Motion detected Unauthorized moment in sector...."
+        ],
+        avg_speed:"50",
+        current_speed:"0",
+        signal_strength:"Good",
+        event_logs:[]
 
     },
      {
-        id:"SRV",
+        type:"SRV",
+        s_no:"SRV-06",
+        roboid:"Robot 6",
         image:"/SurvellianceRobo4.png",
         name:"SurvellianceRobot-06",
-        status:"Idle",
+        status:"Patrolling",
         battery:"90",
         location:"My Home Appartments",
+        health:"65%",
+        temperature:"29°c",
+        alerts:[
+            "Motion detected Unauthorized moment in sector....",
+            "Motion detected Unauthorized moment in sector....",
+            "Motion detected Unauthorized moment in sector...."
+        ],
+        avg_speed:"50",
+        current_speed:"15",
+        signal_strength:"Good",
+        event_logs:[]
 
     }
 ]

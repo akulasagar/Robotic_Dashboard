@@ -1,45 +1,43 @@
-export const SidebarData={
-    Profilebox:{
-        user_name:"User Name",
-        profile_img:"",
-        link:""
+import IconsData from "../components/IconsData";
+
+export const SidebarData = {
+  Profilebox: {
+    user_name: "User Name",
+    profile_img: "",
+    link: "",
+  },
+  Mainmenu: [
+    {
+      icon: IconsData["overall-dashbaord"],
+      label: "Overall Dashboard",
+      link: "",
     },
-    Mainmenu:[
-        {
-        icon:"/proicons_menu.svg",
-        label:"Overall Dashboard",
-        link:"/overall"
-        },
-        {
-        icon:"/proicons_menu.svg",
-        label:"Robots",
-        link:""
-        },
-        {
-        icon:"/proicons_menu.svg",
-        label:"Alerts",
-        link:""
-        },
-        {
-        icon:"/proicons_menu.svg",
-        label:"Robot Logs",
-        link:""
-        }
-
-    ],
-    Settings:[
-        
-            {
-        icon:"/proicons_menu.svg",
-        label:"Help/Support",
-        link:""
-        },
-        {
-        icon:"/proicons_menu.svg",
-        label:"Settings",
-        link:""
-        }
-
-        
-    ]
-}
+    {
+      icon: IconsData["robot-face"],
+      label: "Robots",
+      link: "",
+    },
+    {
+      icon: IconsData["alert-bell"],
+      label: "Alerts",
+      link: "",
+    },
+    {
+      icon: IconsData.logs,
+      label: "Robot Logs",
+      link: "",
+    },
+  ],
+  Settings: [
+    {
+      icon: IconsData.info,
+      label: "Help/Support",
+      link: "",
+    },
+    {
+      icon: IconsData.settings,
+      label: "Settings",
+      link: "",
+    },
+  ],
+};

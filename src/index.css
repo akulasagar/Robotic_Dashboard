@@ -1,16 +1,55 @@
 @import "tailwindcss";
 
+#root{
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
 *{
     box-sizing: border-box;
 }
 body{
     background-color: #F8F8F8;
     overflow: hidden;
+    font-family: 'Poppins' sans-serif;
 }
- .custom-scroll::-webkit-scrollbar {
-      display: none;
-    }
-    .custom-scroll {
-      -ms-overflow-style: none; /* IE and Edge */
-      scrollbar-width: none; /* Firefox */
-    }
+.custom-scroll::-webkit-scrollbar {
+    display: none;
+}
+.custom-scroll {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+.sidebar{
+    transition: width 0.2s ease-in-out;
+}
+.sidebar-username{
+    opacity: 0;
+    visibility: hidden;
+    width: 0;
+    height: 25px;
+    transition: opacity 0.2s ease-in-out;
+}
+.sidebar-text{
+    display: none;
+    opacity: 0;
+    width: 0;
+    height: max;
+    overflow-y: hidden;
+    word-break: keep-all;
+    transition: opacity 0.2s ease-in-out;
+}
+.sidebar:hover .sidebar-box .sidebar-username{
+    visibility: visible;
+    width: auto;
+    opacity: 1;
+}
+.sidebar:hover .sidebar-box .sidebar-text{
+    display: inline-block;
+    opacity: 1;
+    width: auto;
+    visibility: visible;
+    /* background-color: red; */
+    font-size: 14px;
+    font-weight: 400;
+}

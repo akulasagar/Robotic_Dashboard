@@ -2,14 +2,14 @@
 export const RoboData1=[
     
     {
-        id:"SRV",
+        type:"SRV",
         image:"/SurvellianceRobo.png",
         label:"Survelliance Robot",
-        count:"4",
+        count:"6",
         link:"/robotLogin"
     },
     {
-        id:"HUR",
+        type:"HUR",
         image:"/Humanoidrobot.png",
         label:"Humanoid Robot",
         count:"0",
@@ -17,14 +17,14 @@ export const RoboData1=[
 
     },
     {
-        id:"SEHR",
+        type:"SEHR",
         image:"/SemiHumanoidrobo.png",
         label:"Semi-Humanoid Robot",
         count:"0",
         link:"/robotLogin"
     },
     {
-        id:"RSR",
+        type:"RSR",
         image:"/Researchrobo.png",
         label:"Research Robot",
         count:"0",

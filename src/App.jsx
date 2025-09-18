@@ -4,6 +4,7 @@ import Login from './pages/Login';
 import Robots from './pages/Robots';
 import Dashboard from './pages/Dashboard'
 import Alerts from './pages/Alerts';
+import Events from './pages/Events';
 
 
 
@@ -15,6 +16,7 @@ function App() {
         <Route path='/' element={<Robots/>}/>
         <Route path='/dashboard' element={<Dashboard/>}/>
         <Route path="/login" element={<Login/>} />
+        <Route path='/events' element={<Events/>}/>
         <Route path='/alerts' element={<Alerts/>}/>
       </Routes>
     </Router>

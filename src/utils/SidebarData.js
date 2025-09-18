@@ -15,7 +15,7 @@ export const SidebarData = {
     {
       icon: IconsData["robot-face"],
       label: "Robots",
-      link: "",
+      link: "/",
     },
     {
       icon: IconsData["alert-bell"],

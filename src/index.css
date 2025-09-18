@@ -1,4 +1,6 @@
 @import "tailwindcss";
+@import "react-datepicker/dist/react-datepicker.css";
+
 
 #root{
     display: flex;
@@ -13,6 +15,9 @@ body{
     overflow: hidden;
     font-family: 'Poppins' sans-serif;
 }
+main{
+  max-width: 1500px;
+}
 .custom-scroll::-webkit-scrollbar {
     display: none;
 }
@@ -23,6 +28,10 @@ body{
 .sidebar{
     transition: width 0.2s ease-in-out;
 }
+.sidebarLink{
+  height: 40px;
+  overflow: hidden;
+}
 .sidebar-username{
     opacity: 0;
     visibility: hidden;
@@ -31,11 +40,13 @@ body{
     transition: opacity 0.2s ease-in-out;
 }
 .sidebar-text{
-    display: none;
+    /* display: none; */
     opacity: 0;
-    width: 0;
-    height: max;
-    overflow-y: hidden;
+    /* width: 0; */
+    /* height: max; */
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
     word-break: keep-all;
     transition: opacity 0.2s ease-in-out;
 }
@@ -44,8 +55,12 @@ body{
     width: auto;
     opacity: 1;
 }
+.main-menu-box .sidebar-text{
+  height: 20px;
+  overflow: hidden;
+}
 .sidebar:hover .sidebar-box .sidebar-text{
-    display: inline-block;
+    display: block;
     opacity: 1;
     width: auto;
     visibility: visible;

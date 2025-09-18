@@ -30,7 +30,7 @@ const Sidebar = () => {
           <h1 className="sidebar-text uppercase text-[#525967] text-[12px] font-[500]">Main menu</h1>
           
           {SidebarData.Mainmenu.map((each) => (
-            <Link className="sidebarLink place-content-center transition-colors duration-105 text-[#525967] hover:text-white" to={each.link}>
+            <Link key={each.icon+each.label} className="sidebarLink place-content-center transition-colors duration-105 text-[#525967] hover:text-white" to={each.link}>
               <span className="group/span flex justify-center group-hover:justify-start align-middle hover:bg-[#1E9AB0] hover:text-white hover:rounded-md flex-row p-2 gap-2">
                 <i className="text-[#1E9AB0] group-hover/span:text-[#fff]">{each.icon}</i>
                 <p className="sidebar-text capitalize">
@@ -46,7 +46,7 @@ const Sidebar = () => {
           <h1 className="sidebar-text uppercase text-[#525967] text-[12px] font-[500]">Settings</h1>
 
           {SidebarData.Settings.map((each) => (
-            <Link className="place-content-center text-[#525967] hover:text-white hover:shadow transition-colors duration-105" to={each.link}>
+            <Link key={each.icon+each.label} className="place-content-center text-[#525967] hover:text-white hover:shadow transition-colors duration-105" to={each.link}>
               <span className="sidebarLink group/span flex justify-center group-hover:justify-start align-middle hover:bg-[#1E9AB0] hover:text-white hover:rounded-md flex-row p-2 gap-2">
                 <i className="text-[#1E9AB0] group-hover/span:text-[#fff]">{each.icon}</i>
                 <p className="sidebar-text capitalize">

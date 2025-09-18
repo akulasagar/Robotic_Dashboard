@@ -68,3 +68,23 @@ main{
     font-size: 14px;
     font-weight: 400;
 }
+
+
+/* Controls Box */
+.controls-box{
+    overflow: hidden;
+    >button{
+        border: 1px solid #1ba1b9;
+        width: 50%;
+        height: auto;
+        aspect-ratio: 1/1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: all 0.1s ease-in-out;
+    }
+    >button:hover{
+        background-color: #1e8da1;
+        transform: scale(1.1);
+    }
+}

@@ -257,7 +257,7 @@ export default function Dashboard2() {
               </Link>
             </div>
 
-            <div className="h-[54px] w-full grid grid-cols-4 items-center bg-[#1E91B0] text-white text-start px-[20px]">
+            <div className="h-[54px] w-full grid grid-cols-4  gap-4 items-center bg-[#1E91B0] text-white text-start px-[20px]">
               <p>Robot ↑↓</p>
               <p>Time and Date ↑↓</p>
               <p>Event ↑↓</p>
@@ -268,7 +268,7 @@ export default function Dashboard2() {
               RoboEventsData.map((each, index) => (
                 <div
                   key={index}
-                  className="grid grid-cols-4 items-center justify-center px-[20px] text-start h-[54px]"
+                  className="grid grid-cols-4 gap-4 items-center justify-center px-[20px] text-start h-[54px]"
                 >
                   <div className="flex gap-2">
                     <img
@@ -280,13 +280,13 @@ export default function Dashboard2() {
                   </div>
                   <p>{each.time_date}</p>
                   <p>{each.event}</p>
-                  <Link
+                  <div
                     to=""
                     className="w-[100px] h-[30px] text-[14px] border-1 border-gray-400 rounded-[100px] flex items-center justify-center"
                   >
                     <span className="h-2.5 w-2.5 bg-green-700 rounded-[50%] mr-2"></span>
                     <p>{each.status}</p>
-                  </Link>
+                  </div>
                 </div>
               ))
             ) : (
@@ -298,8 +298,8 @@ export default function Dashboard2() {
 
           {/* Video Feed / Manual Control */}
           <div className=" max-h-[665px] h-full w-full rounded-[14px] bg-white p-[24px]">
-            <h1 className="text-[22px] font-semibold">Video Feed / Manual Control</h1>
-            <div className="flex py-2 px-5">
+            <h1 className="text-[22px] font-semibold ">Video Feed / Manual Control</h1>
+            <div className="flex gap-2 ">
               <div className="max-h-[236px] flex  h-full w-full max-w-[420px] rounded-[14px] bg-black p-3 relative">
                 <div className="flex items-center absolute">
                   <p className="h-2.5 w-2.5 bg-red-500 rounded-[50%] mr-2"></p>
@@ -314,7 +314,7 @@ export default function Dashboard2() {
                 />
               </div>
               <div className="m-auto">
-                <button className="max-w-[290px] w-full px-4  rounded-[12px] h-[46px] text-[22px] text-white bg-[#1E9AB0] "onClick={() => setShowControls((prev) => !prev)} >{showControls ? "Video Feed Mode" : "Take Manual Control"}</button>
+                <button className="max-w-[290px] w-full px-4  rounded-[12px] p-3 text-[16px] cursor-pointer  text-white bg-[#1E9AB0] "onClick={() => setShowControls((prev) => !prev)} >{showControls ? "Video Feed Mode" : "Take Manual Control"}</button>
               </div>
             </div>
             <div className="max-h-[500px]">

@@ -20,15 +20,15 @@ export default function Events() {
     <>
       <Header />
       <main className="flex flex-col w-full gap-[10px]  ">
-        <section className="flex h-[calc(100vh-80px)] w-full overflow-y-auto overflow-x-hidden custom-scroll mt-[18px]">
+        <section className="flex h-[calc(100vh-80px)] w-full overflow-y-auto overflow-x-hidden custom-scroll pt-[18px] relative">
 
           <Sidebar />
 
-          <section className="w-[calc(100%-96px)] min-h-max ml-[96px] px-[10px] pb-[20px]  ">
-            <div className='relative p-[10px] border-2 border-[#1E9AB0] h-full rounded-[12px]'>
+          <section className="w-[calc(100%-96px)] min-h-[calc(100vh-80px)] overflow-y-auto ml-[96px] px-[10px] pb-[20px] custom-scroll  ">
+            <div className=' p-[12px] border-2 border-[#1E9AB0]  rounded-[12px]'>
               <div className='sticky top-0 flex justify-between items-center px-[20px] pb-[10px] '>
                 <select
-                  className="border rounded-md p-2 bg-[#F8F8F8] text-sm cursor-pointer   "
+                  className="border rounded-md p-2 bg-[#F8F8F8] text-sm cursor-pointer opacity-[50%]   "
                   value={selectedRobot?.name || ""}
                   onChange={handleRobotChange}
                 >
@@ -71,51 +71,29 @@ export default function Events() {
               <div className='grid grid-cols-2 gap-5'>
                 <div className='max-w-[610px] min-w-[380px] max-h-[420px] bg-white rounded-[14px] '>
                   <div className=''>
-                    <div className='max-h-[220px] w-full '>
-                      <div className='flex'>
-                      <span className='p-2 max-w-[30px] rounded-[50%] aspect-1/1 bg-blue-600 text-white '>{IconsData.profile}</span>
-                      <h1 className='p-2 text-[14px]'> Person Detection </h1>
+                    <div className='max-h-[240px] w-full '>
+                      <div className='flex px-2 pt-2 items-center'>
+                        <span className='p-2 max-w-[50px] h-full rounded-[50%] aspect-1/1 bg-blue-600 text-white flex items-center justify-center '>{IconsData.profile}</span>
+                        <h1 className='p-2 text-[14px] font-semibold'> Person Detection </h1>
                       </div>
-                      <img src='/Face.png'/>
-                      
+                      <img src='/Face.png' />
 
 
 
+
                     </div>
-                    <div className='max-h-[150px] w-full  p-[12px] flex flex-col gap-[12px] '>
-                      <h1 className='text-[12px]'>Recent Events</h1>
-                      
-                    
-                    <div className='grid grid-cols-6 overflow-y-auto  justify-evenly'>
-                      <div className='flex flex-col justify-center m-auto'>
-                    <img className='max-h[80px] max-w-[80px]' src='/Face2.png'/>
-                    <p className='text-[6px] m-auto my-[4px]'> 2:32:45 pm, 15/10/23</p>
-                    </div>
-                    <div className='flex flex-col justify-center m-auto'>
-                    <img className='max-h[80px] max-w-[80px]' src='/Face2.png'/>
-                    <p className='text-[6px] m-auto my-[4px]'> 2:32:45 pm, 15/10/23</p>
-                    </div>
-                    <div className='flex flex-col justify-center m-auto'>
-                    <img className='max-h[80px] max-w-[80px]' src='/Face2.png'/>
-                    <p className='text-[6px] m-auto my-[4px]'> 2:32:45 pm, 15/10/23</p>
-                    </div>
-                    <div className='flex flex-col justify-center m-auto'>
-                    <img className='max-h[80px] max-w-[80px]' src='/Face2.png'/>
-                    <p className='text-[6px] m-auto my-[4px]'> 2:32:45 pm, 15/10/23</p>
-                    </div>
-                    <div className='flex flex-col justify-center m-auto'>
-                    <img className='max-h[80px] max-w-[80px]' src='/Face2.png'/>
-                    <p className='text-[6px] m-auto my-[4px]'> 2:32:45 pm, 15/10/23</p>
-                    </div>
-                    <div className='flex flex-col justify-center m-auto'>
-                    <img className='max-h[80px] max-w-[80px]' src='/Face2.png'/>
-                    <p className='text-[6px] m-auto my-[4px]'> 2:32:45 pm, 15/10/23</p>
-                    </div>
-                    <div className='flex flex-col justify-center m-auto'>
-                    <img className='max-h[80px] max-w-[80px]' src='/Face2.png'/>
-                    <p className='text-[6px] m-auto my-[4px]'> 2:32:45 pm, 15/10/23</p>
-                    </div>
-                   </div>
+                    <div className='max-h-[170px] w-full  p-[12px] flex flex-col '>
+                      <h1 className='text-[12px] font-semibold'>Recent Events</h1>
+
+
+                      <div className='grid grid-cols-6 gap-1 overflow-y-auto  justify-evenly py-2'>
+                        <div className='flex flex-col ] justify-center items-centem-auto h-[100px]'>
+                          <img className='max-h-[80px] w-full ' src='/Face2.png' />
+                          <p className='text-[6px] m-auto my-[4px]'> 2:32:45 pm, 15/10/23</p>
+                        </div>
+
+
+                      </div>
 
 
                     </div>
@@ -123,6 +101,99 @@ export default function Events() {
 
                 </div>
 
+<div className='max-w-[610px] min-w-[380px] max-h-[420px] bg-white rounded-[14px] '>
+                  <div className=''>
+                    <div className='max-h-[240px] w-full '>
+                      <div className='flex px-2 pt-2 items-center'>
+                        <span className='p-2 max-w-[50px] h-full rounded-[50%] aspect-1/1 bg-blue-600 text-white flex items-center justify-center '>{IconsData.profile}</span>
+                        <h1 className='p-2 text-[14px] font-semibold'> Person Detection </h1>
+                      </div>
+                      <img src='/Face.png' />
+
+
+
+
+                    </div>
+                    <div className='max-h-[170px] w-full  p-[12px] flex flex-col '>
+                      <h1 className='text-[12px] font-semibold'>Recent Events</h1>
+
+
+                      <div className='grid grid-cols-6 gap-1 overflow-y-auto  justify-evenly py-2'>
+                        <div className='flex flex-col ] justify-center items-centem-auto h-[100px]'>
+                          <img className='max-h-[80px] w-full ' src='/Face2.png' />
+                          <p className='text-[6px] m-auto my-[4px]'> 2:32:45 pm, 15/10/23</p>
+                        </div>
+
+
+                      </div>
+
+
+                    </div>
+                  </div>
+
+                </div>
+                <div className='max-w-[610px] min-w-[380px] max-h-[420px] bg-white rounded-[14px] '>
+                  <div className=''>
+                    <div className='max-h-[240px] w-full '>
+                      <div className='flex px-2 pt-2 items-center'>
+                        <span className='p-2 max-w-[50px] h-full rounded-[50%] aspect-1/1 bg-blue-600 text-white flex items-center justify-center '>{IconsData.profile}</span>
+                        <h1 className='p-2 text-[14px] font-semibold'> Person Detection </h1>
+                      </div>
+                      <img src='/Face.png' />
+
+
+
+
+                    </div>
+                    <div className='max-h-[170px] w-full  p-[12px] flex flex-col '>
+                      <h1 className='text-[12px] font-semibold'>Recent Events</h1>
+
+
+                      <div className='grid grid-cols-6 gap-1 overflow-y-auto  justify-evenly py-2'>
+                        <div className='flex flex-col ] justify-center items-centem-auto h-[100px]'>
+                          <img className='max-h-[80px] w-full ' src='/Face2.png' />
+                          <p className='text-[6px] m-auto my-[4px]'> 2:32:45 pm, 15/10/23</p>
+                        </div>
+
+
+                      </div>
+
+
+                    </div>
+                  </div>
+
+                </div>
+                <div className='max-w-[610px] min-w-[380px] max-h-[420px] bg-white rounded-[14px] '>
+                  <div className=''>
+                    <div className='max-h-[240px] w-full '>
+                      <div className='flex px-2 pt-2 items-center'>
+                        <span className='p-2 max-w-[50px] h-full rounded-[50%] aspect-1/1 bg-blue-600 text-white flex items-center justify-center '>{IconsData.profile}</span>
+                        <h1 className='p-2 text-[14px] font-semibold'> Person Detection </h1>
+                      </div>
+                      <img src='/Face.png' />
+
+
+
+
+                    </div>
+                    <div className='max-h-[170px] w-full  p-[12px] flex flex-col '>
+                      <h1 className='text-[12px] font-semibold'>Recent Events</h1>
+
+
+                      <div className='grid grid-cols-6 gap-1 overflow-y-auto  justify-evenly py-2'>
+                        <div className='flex flex-col ] justify-center items-centem-auto h-[100px]'>
+                          <img className='max-h-[80px] w-full ' src='/Face2.png' />
+                          <p className='text-[6px] m-auto my-[4px]'> 2:32:45 pm, 15/10/23</p>
+                        </div>
+
+
+                      </div>
+
+
+                    </div>
+                  </div>
+
+                </div>
 
               </div>
 

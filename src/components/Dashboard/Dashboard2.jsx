@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import markerIcon from "leaflet/dist/images/marker-icon.png";
 import markerShadow from "leaflet/dist/images/marker-shadow.png";
-import { useRobot } from "../../context/RobotContext";
+import { RobotContext } from "../../context/RobotContext";
 import { RoboEventsData } from "../../utils/RoboEventsData";
 import RobotControls from "./RobotControls";
 import IconsData from "../IconsData";
@@ -20,16 +20,17 @@ const customIcon = L.icon({
   shadowSize: [41, 41],
 });
 
-
 export default function Dashboard2() {
   const [showControls, setShowControls] = useState(false);
-  const { selectedRobot } = useRobot();
+  const { selectedRobot } = useContext(RobotContext);
+
   const videoMap = {
     idle: "/Idle-video.mp4",
     patrolling: "/Robot_Camera_Video_Generation.mp4",
     charging: "/Charging_Station_Battery_Animation_Video.mp4",
   };
-  const videoSrc = videoMap[selectedRobot?.status?.toLowerCase()] || "/Default-video.mp4";
+  const videoSrc =
+    videoMap[selectedRobot?.status?.toLowerCase()] || "/Default-video.mp4";
 
   const MapResizeHandler = () => {
     const map = useMap();
@@ -76,7 +77,7 @@ export default function Dashboard2() {
                 Currently {selectedRobot.status} . . . !
               </p>
               <span>
-               <video
+                <video
                   key={videoSrc}
                   src={videoSrc}
                   autoPlay
@@ -84,9 +85,8 @@ export default function Dashboard2() {
                   muted
                   className="w-[90%] h-[140px] "
                 />
-                </span>
+              </span>
             </div>
-
 
             {/* Robot Speed Card */}
             <div className="w-full h-[376px] rounded-[32px] bg-white p-3 flex flex-col">
@@ -163,16 +163,14 @@ export default function Dashboard2() {
 
           {/* Right Column */}
           {/* Recent ALerts Card */}
-          <div className='flex flex-col max-w-[620px] min-w-[400px] w-full gap-[10px]'>
-          
-
-
-
+          <div className="flex flex-col max-w-[620px] min-w-[400px] w-full gap-[10px]">
             {/* Robot Info */}
             <div className="w-full h-[275px] bg-gradient-to-r from-white from-40% to-[#5BB9C5] rounded-[32px] border-b-5 border-[#5BB9C5] flex p-3">
               <div className="w-[60%] p-3 flex flex-col gap-4">
                 <div className="pl-5">
-                  <p className="text-[22px] font-semibold">{selectedRobot.type}</p>
+                  <p className="text-[22px] font-semibold">
+                    {selectedRobot.type}
+                  </p>
                   <p className="text-[12px]">{selectedRobot.roboid}</p>
                 </div>
                 <div className="grid grid-cols-2 gap-y-5 text-[12px]">
@@ -212,52 +210,83 @@ export default function Dashboard2() {
               </div>
             </div>
 
-              {/* Recent ALerts Card */}
-            <div className=' w-full h-[380px]  bg-white rounded-[16px] p-3 flex flex-col gap-[26px]' >
-              <span className='flex justify-between px-2 text-[22px] font-semibold'><p>Recent Alerts</p> <img src='' /></span>
-              <div className='w-full max-w-[508px] h-[292px] flex flex-col gap-[18px]'>
-                <div className='w-full max-w-5408px]  h-[86px] bg-gray-50 rounded-[10px] flex flex-row  p-[18px] gap-[12px] items-center '>
-                  <span className='h-[52px] w-[52px] rounded-[50%] bg-red-200 flex items-center justify-center aspect-1/1 '>
+            {/* Recent ALerts Card */}
+            <div className=" w-full h-[380px]  bg-white rounded-[16px] p-3 flex flex-col gap-[26px]">
+              <span className="flex justify-between px-2 text-[22px] font-semibold">
+                <p>Recent Alerts</p>
+              </span>
+              <div className="w-full max-w-[508px] h-[292px] flex flex-col gap-[18px]">
+                <div className="w-full max-w-5408px]  h-[86px] bg-gray-50 rounded-[10px] flex flex-row  p-[18px] gap-[12px] items-center ">
+                  <span className="h-[52px] w-[52px] rounded-[50%] bg-red-200 flex items-center justify-center aspect-1/1 ">
                     <p className="text-red-400">{IconsData.warning}</p>
                   </span>
-                  <span className='flex flex-col w-full'>
-                    <p className='text-[15px] font-semibold '> Motion detected</p>
-                    <p className='text-[12px] text-gray-500'>Unauthorized moment in sector.... </p>
+                  <span className="flex flex-col w-full">
+                    <p className="text-[15px] font-semibold ">
+                      {" "}
+                      Motion detected
+                    </p>
+                    <p className="text-[12px] text-gray-500">
+                      Unauthorized moment in sector....{" "}
+                    </p>
                   </span>
-                  <span className=''>
-                    <Link to="/alerts"> <img className='h-[26px] w-[26px] cursor-pointer' src='/arrow-icon.png' /></Link>
-
-                  </span>
-                </div>
-                <div className=' w-full h-[86px] bg-gray-50 rounded-[10px] flex flex-row  p-[18px] gap-[12px] items-center '>
-                  <span className='h-[52px] w-[52px] rounded-[50%] bg-orange-200 flex items-center justify-center aspect-1/1 '>
-                   <p className="text-orange-400">{IconsData.battery}</p>
-                  </span>
-                  <span className='flex flex-col w-full '>
-                    <p className='text-[15px] font-semibold '> Motion detected</p>
-                    <p className='text-[12px] text-gray-500'>Unauthorized moment in sector.... </p>
-                  </span>
-                  <span className=''>
-                    <Link to="/alerts"> <img className='h-[26px] w-[26px] cursor-pointer' src='/arrow-icon.png' /></Link>
-
+                  <span className="">
+                    <Link to="/alerts">
+                      {" "}
+                      <img
+                        className="h-[26px] w-[26px] cursor-pointer"
+                        src="/arrow-icon.png"
+                      />
+                    </Link>
                   </span>
                 </div>
-                <div className=' w-full h-[86px] bg-gray-50 rounded-[10px] flex flex-row  p-[18px] gap-[12px] items-center '>
-                  <span className='h-[52px] w-[52px] rounded-[50%] bg-red-200 flex items-center justify-center aspect-1/1 '>
-                   <p className="text-red-400">{IconsData.warning}</p>
+                <div className=" w-full h-[86px] bg-gray-50 rounded-[10px] flex flex-row  p-[18px] gap-[12px] items-center ">
+                  <span className="h-[52px] w-[52px] rounded-[50%] bg-orange-200 flex items-center justify-center aspect-1/1 ">
+                    <p className="text-orange-400">{IconsData.battery}</p>
                   </span>
-                  <span className='flex flex-col w-full '>
-                    <p className='text-[15px] font-semibold '> Motion detected</p>
-                    <p className='text-[12px] text-gray-500'>Unauthorized moment in sector.... </p>
+                  <span className="flex flex-col w-full ">
+                    <p className="text-[15px] font-semibold ">
+                      {" "}
+                      Motion detected
+                    </p>
+                    <p className="text-[12px] text-gray-500">
+                      Unauthorized moment in sector....{" "}
+                    </p>
                   </span>
-                  <span className=''>
-                    <Link to="/alerts"> <img className='h-[26px] w-[26px] cursor-pointer' src='/arrow-icon.png' /></Link>
-
+                  <span className="">
+                    <Link to="/alerts">
+                      {" "}
+                      <img
+                        className="h-[26px] w-[26px] cursor-pointer"
+                        src="/arrow-icon.png"
+                      />
+                    </Link>
+                  </span>
+                </div>
+                <div className=" w-full h-[86px] bg-gray-50 rounded-[10px] flex flex-row  p-[18px] gap-[12px] items-center ">
+                  <span className="h-[52px] w-[52px] rounded-[50%] bg-red-200 flex items-center justify-center aspect-1/1 ">
+                    <p className="text-red-400">{IconsData.warning}</p>
+                  </span>
+                  <span className="flex flex-col w-full ">
+                    <p className="text-[15px] font-semibold ">
+                      {" "}
+                      Motion detected
+                    </p>
+                    <p className="text-[12px] text-gray-500">
+                      Unauthorized moment in sector....{" "}
+                    </p>
+                  </span>
+                  <span className="">
+                    <Link to="/alerts">
+                      {" "}
+                      <img
+                        className="h-[26px] w-[26px] cursor-pointer"
+                        src="/arrow-icon.png"
+                      />
+                    </Link>
                   </span>
                 </div>
               </div>
             </div>
-            
           </div>
         </div>
 
@@ -315,7 +344,9 @@ export default function Dashboard2() {
 
           {/* Video Feed / Manual Control */}
           <div className=" max-h-[665px]  w-full rounded-[14px] bg-white p-[24px]">
-            <h1 className="text-[22px] font-semibold ">Video Feed / Manual Control</h1>
+            <h1 className="text-[22px] font-semibold ">
+              Video Feed / Manual Control
+            </h1>
             <div className="flex justify-center ">
               <div className="max-h-[304px] flex  max-w-[720px] w-auto h-auto rounded-[14px] bg-black p-3 relative">
                 <div className="flex items-center absolute">
@@ -329,21 +360,21 @@ export default function Dashboard2() {
                   muted
                   className="rounded-2xl shadow-lg w-full h-full"
                 />
-                <button className="absolute rounded-[12px] w-auto px-4 bottom-1 right-1  p-3 text-[16px] cursor-pointer  text-white border border-white "onClick={() => setShowControls((prev) => !prev)} >{showControls ? "Video Feed Mode" : "Take Manual Control"}</button>
-
+                <button
+                  className="absolute rounded-[12px] w-auto px-4 bottom-1 right-1  p-3 text-[16px] cursor-pointer  text-white border border-white "
+                  onClick={() => setShowControls((prev) => !prev)}
+                >
+                  {showControls ? "Video Feed Mode" : "Take Manual Control"}
+                </button>
               </div>
-
-              
             </div>
-            <div className="max-h-[50%]">
-              {showControls && (
-                <RobotControls />
-              )}
+            <div className="max-h-[500px]">
+              {showControls && <RobotControls ControlModeOn={showControls} />}
             </div>
-
           </div>
         </div>
       </div>
+
       {/* Map */}
       <div className="max-w-[445px] gap-[10px] w-full  sticky top-[20px] self-start mr-auto">
         <div className="w-full h-[665px] bg-gray-200 rounded-[32px] overflow-hidden">
@@ -364,7 +395,6 @@ export default function Dashboard2() {
           </MapContainer>
         </div>
       </div>
-
     </section>
   );
 }

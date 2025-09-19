@@ -1,8 +1,8 @@
-import React from "react";
-import { useRobot } from "../../context/RobotContext";
+import React, { useContext } from "react";
+import { RobotContext } from "../../context/RobotContext";
 
 export default function Dashboard1() {
-  const { selectedRobot } = useRobot();
+  const { selectedRobot } = useContext(RobotContext);
 
   // Prevent crash when no robot is selected
   if (!selectedRobot) {

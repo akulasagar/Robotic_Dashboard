@@ -11,9 +11,9 @@
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.13",
-    "framer-motion": "^12.23.14",
     "leaflet": "^1.9.4",
     "mapbox-gl": "^3.15.0",
+    "mqtt": "^5.14.1",
     "react": "^19.1.1",
     "react-datepicker": "^8.7.0",
     "react-dom": "^19.1.1",

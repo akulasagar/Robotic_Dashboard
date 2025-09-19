@@ -1,12 +1,12 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
 import { RoboData1 } from "../utils/RoboTopCards";
-import { useRobot } from "../context/RobotContext";
+import { RobotContext } from "../context/RobotContext";
 
 export default function Robots() {
-  const { robots, setSelectedRobot } = useRobot();
+  const { robots, setSelectedRobot } = useContext(RobotContext);
   const [activeRobotType, setActiveRobotType] = useState(
     RoboData1[0]?.type || ""
   );

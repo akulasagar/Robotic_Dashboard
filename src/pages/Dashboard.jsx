@@ -1,12 +1,12 @@
-import { useRobot } from "../context/RobotContext";
 import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
 import Dashboard1 from "../components/Dashboard/Dashboard1";
 import Dashboard2 from "../components/Dashboard/Dashboard2";
+import { RobotContext } from "../context/RobotContext";
+import { useContext } from "react";
 
 export default function Dashboard() {
-  const { robots, selectedRobot, setSelectedRobot } = useRobot();
-
+  const { robots, selectedRobot, setSelectedRobot } = useContext(RobotContext);
   const handleRobotChange = (e) => {
     const selectedName = e.target.value;
     const foundRobot = robots.find((robot) => robot.name === selectedName);
@@ -17,11 +17,10 @@ export default function Dashboard() {
     <>
       <Header />
       <main className="flex flex-col w-full gap-[10px]  ">
-       
         {/* Dashboard Layout */}
         <section className="flex h-[calc(100vh-80px)] w-full overflow-y-auto overflow-x-hidden custom-scroll">
           <div className="mt-[18px]">
-          <Sidebar selectedRobot={selectedRobot} />
+            <Sidebar selectedRobot={selectedRobot} />
           </div>
 
           <section className="w-[calc(100%-96px)] min-h-max ml-[96px] px-2 pb-[20px]">
@@ -32,6 +31,7 @@ export default function Dashboard() {
                 value={selectedRobot?.name || ""}
                 onChange={handleRobotChange}
               >
+                {console.log("robots List Data", robots)}
                 {robots.map((robot, index) => (
                   <option key={index} value={robot.name}>
                     {robot.name}

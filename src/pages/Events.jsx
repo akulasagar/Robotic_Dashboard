@@ -1,5 +1,5 @@
-import React from 'react';
-import { useRobot } from "../context/RobotContext";
+import React, { useContext } from 'react';
+import { RobotContext } from "../context/RobotContext";
 import Header from '../components/Header';
 import Sidebar from '../components/Sidebar';
 import DatePicker from "react-datepicker";
@@ -7,7 +7,7 @@ import IconsData from '../components/IconsData';
 
 
 export default function Events() {
-  const { robots, selectedRobot, setSelectedRobot } = useRobot();
+  const { robots, selectedRobot, setSelectedRobot } = useContext(RobotContext);
 
   const handleRobotChange = (e) => {
     const selectedName = e.target.value;

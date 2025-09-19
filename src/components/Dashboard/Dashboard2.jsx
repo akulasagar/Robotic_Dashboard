@@ -24,6 +24,12 @@ const customIcon = L.icon({
 export default function Dashboard2() {
   const [showControls, setShowControls] = useState(false);
   const { selectedRobot } = useRobot();
+  const videoMap = {
+    idle: "/Idle-video.mp4",
+    patrolling: "/Robot_Camera_Video_Generation.mp4",
+    charging: "/Charging_Station_Battery_Animation_Video.mp4",
+  };
+  const videoSrc = videoMap[selectedRobot?.status?.toLowerCase()] || "/Default-video.mp4";
 
   const MapResizeHandler = () => {
     const map = useMap();
@@ -64,12 +70,23 @@ export default function Dashboard2() {
           {/* Left Column */}
           <div className="flex flex-col  max-w-[320px] min-w-[250px] w-full gap-[20px] mb-10">
             {/* Robot Status Card */}
-            <div className="w-full h-[270px] rounded-[32px] bg-white p-3">
+            <div className="w-full h-[270px] rounded-[32px] bg-white p-3 flex flex-col gap-3">
               <p className="text-[22px] font-semibold">Status</p>
-              <p className="text-[22px] mt-[20px] text-[#1E9AB0]">
+              <p className="text-[22px]  text-[#1E9AB0]">
                 Currently {selectedRobot.status} . . . !
               </p>
+              <span>
+               <video
+                  key={videoSrc}
+                  src={videoSrc}
+                  autoPlay
+                  loop
+                  muted
+                  className="w-[90%] h-[140px] "
+                />
+                </span>
             </div>
+
 
             {/* Robot Speed Card */}
             <div className="w-full h-[376px] rounded-[32px] bg-white p-3 flex flex-col">
@@ -276,7 +293,7 @@ export default function Dashboard2() {
                       src={selectedRobot.image}
                       alt="robot"
                     />
-                    <p>{each.roboid}</p>
+                    <p>{selectedRobot.roboid}</p>
                   </div>
                   <p>{each.time_date}</p>
                   <p>{each.event}</p>
@@ -297,10 +314,10 @@ export default function Dashboard2() {
           </div>
 
           {/* Video Feed / Manual Control */}
-          <div className=" max-h-[665px] h-full w-full rounded-[14px] bg-white p-[24px]">
+          <div className=" max-h-[665px]  w-full rounded-[14px] bg-white p-[24px]">
             <h1 className="text-[22px] font-semibold ">Video Feed / Manual Control</h1>
-            <div className="flex gap-2 ">
-              <div className="max-h-[236px] flex  h-full w-full max-w-[420px] rounded-[14px] bg-black p-3 relative">
+            <div className="flex justify-center ">
+              <div className="max-h-[304px] flex  max-w-[720px] w-auto h-auto rounded-[14px] bg-black p-3 relative">
                 <div className="flex items-center absolute">
                   <p className="h-2.5 w-2.5 bg-red-500 rounded-[50%] mr-2"></p>
                   <p className="text-white text-[14px]">REC</p>
@@ -312,12 +329,13 @@ export default function Dashboard2() {
                   muted
                   className="rounded-2xl shadow-lg w-full h-full"
                 />
+                <button className="absolute rounded-[12px] w-auto px-4 bottom-1 right-1  p-3 text-[16px] cursor-pointer  text-white border border-white "onClick={() => setShowControls((prev) => !prev)} >{showControls ? "Video Feed Mode" : "Take Manual Control"}</button>
+
               </div>
-              <div className="m-auto">
-                <button className="max-w-[290px] w-full px-4  rounded-[12px] p-3 text-[16px] cursor-pointer  text-white bg-[#1E9AB0] "onClick={() => setShowControls((prev) => !prev)} >{showControls ? "Video Feed Mode" : "Take Manual Control"}</button>
-              </div>
+
+              
             </div>
-            <div className="max-h-[500px]">
+            <div className="max-h-[50%]">
               {showControls && (
                 <RobotControls />
               )}

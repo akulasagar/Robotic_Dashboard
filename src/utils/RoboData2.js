@@ -7,7 +7,7 @@ export const RoboData2=[
         name:"SurvellianceRobot-01",
         status:"Idle",
         battery:"72",
-        location:"My Home Appartments",
+        location:"My Home Bhooja",
         health:"50%",
         temperature:"23°c",
         alerts:[
@@ -31,7 +31,7 @@ export const RoboData2=[
         name:"SurvellianceRobot-02",
         status:"Patrolling",
         battery:"50",
-        location:"My Home Appartments",
+        location:"My Home Abhra",
         health:"97%",
         temperature:"23°c",
        alerts:[
@@ -52,9 +52,9 @@ export const RoboData2=[
         roboid:"Robot 3",
         image:"/SurvellianceRobo3.png",
         name:"SurvellianceRobot-03",
-        status:"Idle",
+        status:"Charging",
         battery:"23",
-        location:"My Home Appartments",
+        location:"My Home Avatar",
         health:"70%",
         temperature:"23°c",
        alerts:[

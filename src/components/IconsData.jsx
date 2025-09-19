@@ -21,6 +21,7 @@ const IconsData = {
     'arrow':<Icon icon="bxs:up-arrow" />,
     'pause':<Icon icon="quill:pause" />,
     'play':<Icon icon="mdi:play" width="24" height="24" />,
+    'videocamera':<Icon icon="ph:video-camera-light" width="56" height="56" />,
     
     'warning':<Icon icon="material-symbols:warning-outline-rounded" width="24" height="24" />,
     'profile':<Icon icon="radix-icons:person" width="15" height="15" />

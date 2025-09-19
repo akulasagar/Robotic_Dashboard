@@ -75,7 +75,7 @@ main{
     overflow: hidden;
     >button{
         border: 1px solid #1ba1b9;
-        width: 50%;
+        width: 33.33%;
         height: auto;
         aspect-ratio: 1/1;
         display: flex;

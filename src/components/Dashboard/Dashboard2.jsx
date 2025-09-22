@@ -6,7 +6,7 @@ import "leaflet/dist/leaflet.css";
 import markerIcon from "leaflet/dist/images/marker-icon.png";
 import markerShadow from "leaflet/dist/images/marker-shadow.png";
 import { RobotContext } from "../../context/RobotContext";
-import { RoboEventsData } from "../../utils/RoboEventsData";
+// import { RoboEventsData } from "../../utils/RoboEventsData";
 import RobotControls from "./RobotControls";
 import IconsData from "../IconsData";
 
@@ -169,7 +169,7 @@ export default function Dashboard2() {
               <div className="w-[60%] p-3 flex flex-col gap-4">
                 <div className="pl-5">
                   <p className="text-[22px] font-semibold">
-                    {selectedRobot.type}
+                    {selectedRobot.name}
                   </p>
                   <p className="text-[12px]">{selectedRobot.roboid}</p>
                 </div>
@@ -310,8 +310,8 @@ export default function Dashboard2() {
               <p>Status ↑↓</p>
             </div>
 
-            {RoboEventsData && RoboEventsData.length > 0 ? (
-              RoboEventsData.map((each, index) => (
+            {selectedRobot.event_logs && selectedRobot.event_logs.length > 0 ? (
+              selectedRobot.event_logs.map((each, index) => (
                 <div
                   key={index}
                   className="grid grid-cols-4 gap-4 items-center justify-center px-[20px] text-start h-[54px]"
@@ -343,12 +343,13 @@ export default function Dashboard2() {
           </div>
 
           {/* Video Feed / Manual Control */}
-          <div className=" max-h-[665px]  w-full rounded-[14px] bg-white p-[24px]">
+          <div className=" max-h-[665px]  w-full rounded-[14px] bg-white p-[24px] ">
+            
             <h1 className="text-[22px] font-semibold ">
               Video Feed / Manual Control
             </h1>
-            <div className="flex justify-center ">
-              <div className="max-h-[304px] flex  max-w-[720px] w-auto h-auto rounded-[14px] bg-black p-3 relative">
+            <div className="flex  ">
+              <div className="max-h-[304px] flex  max-w-[320px] w-auto h-auto rounded-[14px] bg-black p-3 relative">
                 <div className="flex items-center absolute">
                   <p className="h-2.5 w-2.5 bg-red-500 rounded-[50%] mr-2"></p>
                   <p className="text-white text-[14px]">REC</p>
@@ -360,24 +361,22 @@ export default function Dashboard2() {
                   muted
                   className="rounded-2xl shadow-lg w-full h-full"
                 />
-                <button
-                  className="absolute rounded-[12px] w-auto px-4 bottom-1 right-1  p-3 text-[16px] cursor-pointer  text-white border border-white "
-                  onClick={() => setShowControls((prev) => !prev)}
-                >
-                  {showControls ? "Video Feed Mode" : "Take Manual Control"}
-                </button>
               </div>
-            </div>
-            <div className="max-h-[500px]">
-              {showControls && <RobotControls ControlModeOn={showControls} />}
+              <div className="w-full flex justify-center items-center ml-10">
+      <Link to="/controls" className=" rounded bg-[#1F9AB0] px-4 py-2 text-white">Manual Control</Link>
+</div>
             </div>
           </div>
         </div>
       </div>
 
       {/* Map */}
-      <div className="max-w-[445px] gap-[10px] w-full  sticky top-[20px] self-start mr-auto">
+      <div className=" max-w-[445px] gap-[10px] w-full  sticky top-[20px] self-start mr-auto">
+        
+        
+       
         <div className="w-full h-[665px] bg-gray-200 rounded-[32px] overflow-hidden">
+          <button className=" z-2000 absolute border bg-white rounded-[100px] p-2 right-2 bottom-2 inline-flex text-[12px] "> Customise map{IconsData.location}</button>
           <MapContainer
             center={position}
             zoom={13}

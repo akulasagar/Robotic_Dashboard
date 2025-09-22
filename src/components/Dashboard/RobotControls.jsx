@@ -2,6 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import IconsData from "../IconsData";
 import PanTiltControl from "./PanTiltControl";
 import MqttDashboard from "./MqttDashboard";
+import { Link } from "react-router-dom";
 
 const RobotComds = {
   // robot controls
@@ -189,50 +190,48 @@ const RemoteControl = (props) => {
     });
   };
 
-  useEffect(() => {
-    if (!ControlModeOn) return;
+  // useEffect(() => {
+  //   if (!ControlModeOn) return;
 
-    const script = document.createElement("script");
-    script.src = "https://sdk.amazonaws.com/js/aws-sdk-2.1158.0.min.js";
-    script.async = true;
+  //   const script = document.createElement("script");
+  //   script.src = "https://sdk.amazonaws.com/js/aws-sdk-2.1158.0.min.js";
+  //   script.async = true;
 
-    script.onload = () => {
-      if (window.AWS) {
-        window.AWS.config.update({
-          region: REGION,
-          credentials: new window.AWS.CognitoIdentityCredentials({
-            IdentityPoolId: IDENTITY_POOL_ID,
-          }),
-        });
+  //   script.onload = () => {
+  //     if (window.AWS) {
+  //       window.AWS.config.update({
+  //         region: REGION,
+  //         credentials: new window.AWS.CognitoIdentityCredentials({
+  //           IdentityPoolId: IDENTITY_POOL_ID,
+  //         }),
+  //       });
 
-        connectToIot();
-      } else {
-        console.error("AWS SDK failed to load");
-      }
-    };
+  //       connectToIot();
+  //     } else {
+  //       console.error("AWS SDK failed to load");
+  //     }
+  //   };
 
-    document.body.appendChild(script);
+  //   document.body.appendChild(script);
 
-    return () => {
-      document.body.removeChild(script);
+  //   return () => {
+  //     document.body.removeChild(script);
 
-      if (iotClient.current) {
-        try {
-          iotClient.current = null; // AWS.IotData doesn’t need .end(), but free ref
-          addLog("IoT client disconnected.", "warning");
-        } catch (e) {
-          console.warn("IoT cleanup error:", e);
-        }
-      }
-    };
-  }, [ControlModeOn]);
+  //     if (iotClient.current) {
+  //       try {
+  //         iotClient.current = null; // AWS.IotData doesn’t need .end(), but free ref
+  //         addLog("IoT client disconnected.", "warning");
+  //       } catch (e) {
+  //         console.warn("IoT cleanup error:", e);
+  //       }
+  //     }
+  //   };
+  // }, [ControlModeOn]);
 
   return (
     <>
-      <div className="flex gap-8 bg-gray300 w-full h-auto text-white">
-        {/* Remote Control Section */}
-        <section className="flex justify-between w-full items-center">
-          <div className=" flex flex-col gap-[40px] w-[30%]">
+      <div className="flex flex-col  bg-gray300 w-full h-auto text-white">
+  <div className="flex justify-between items-center px-10   ">
             {/* Connection Status */}
             <div className="bg-gray-800 px-6 mt-2 py-3 w-auto flex self-start rounded-lg text-center shadow-md">
               <p className="text-xs w-max">
@@ -250,7 +249,17 @@ const RemoteControl = (props) => {
                 </span>
               </p>
             </div>
+            
+      
+      <Link to="/dashboard" className=" rounded bg-[#1F9AB0] px-4 py-2 text-white">Go to Automatic Mode</Link>
 
+</div>
+
+        {/* Remote Control Section */}
+        <section className="flex justify-between w-full items-center">
+
+          <div className=" flex flex-col gap-[40px] w-[30%]">
+          
             {/* control section */}
             <div className="flex items-center justify-start ml-[70px]">
               <div className="relative">

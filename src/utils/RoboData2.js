@@ -18,7 +18,7 @@ export const RoboData2 = [
     avg_speed: "50",
     current_speed: "0",
     signal_strength: "Good",
-    event_logs: ["", ""],
+    event_logs: [],
   },
   {
     type: "SRV",

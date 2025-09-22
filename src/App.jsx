@@ -6,6 +6,7 @@ import Robots from './pages/Robots';
 import Dashboard from './pages/Dashboard'
 import Alerts from './pages/Alerts';
 import Events from './pages/Events';
+import ManualControlpage from './pages/ManualControlpage';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/login" element={<Login/>} />
         <Route path='/events' element={<Events/>}/>
         <Route path='/alerts' element={<Alerts/>}/>
+        <Route path='/controls' element={<ManualControlpage/>}/>
       </Routes>
     </Router>
   );

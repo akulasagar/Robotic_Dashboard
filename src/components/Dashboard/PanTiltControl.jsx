@@ -4,23 +4,20 @@ import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { Icon } from '@iconify/react';
 
 // =================================================================
-// 1. Pan Slider Component
+// 1. Pan Slider Component (No changes needed here for this request)
 // =================================================================
 const PanSlider = ({ value, onChange }) => {
   const sliderRef = useRef(null);
   const [isDragging, setIsDragging] = useState(false);
-  // NEW: Local state to manage the text in the input box
   const [inputValue, setInputValue] = useState(Math.round(value).toString());
   const size = 160;
   const radius = 70;
   const handlePointClick = (e, val) => { e.stopPropagation(); onChange(val); };
 
-  // NEW: useEffect to sync the input box when the slider is dragged
   useEffect(() => {
     setInputValue(Math.round(value).toString());
   }, [value]);
 
-  // NEW: Handlers to manage typing in the input, validating, and submitting
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
   };
@@ -75,14 +72,13 @@ const PanSlider = ({ value, onChange }) => {
         <div className="w-4 h-4 bg-cyan-500 rounded-full absolute cursor-pointer border border-white shadow-md z-20" style={{ left: `${handleX - 8}px`, top: `${handleY - 8}px` }} />
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
           <div className="relative w-14 h-14 flex items-center justify-center">
-             <div className="absolute" style={{ top: '-8px', left: '50%', transform: `translateX(-50%) rotate(${redLineRotation}deg)`, transformOrigin: '50% 100%', transition: 'transform 100ms' }}>
+              <div className="absolute" style={{ top: '-8px', left: '50%', transform: `translateX(-50%) rotate(${redLineRotation}deg)`, transformOrigin: '50% 100%', transition: 'transform 100ms' }}>
                <Icon icon="ph:video-camera-light" width="56" height="56" className="text-gray-800 -rotate-90 mt-[-20px]" />
-             </div>
+              </div>
           </div>
         </div>
       </div>
       <div className="flex flex-col items-center">
-        {/* MODIFIED: Input is now interactive */}
         <div className="relative">
           <input 
             type="text" 
@@ -101,23 +97,20 @@ const PanSlider = ({ value, onChange }) => {
 };
 
 // ==================================================================
-// 2. Tilt Slider Component
+// 2. Tilt Slider Component (Changes applied here)
 // ==================================================================
 const TiltSlider = ({ value, onChange }) => {
   const sliderRef = useRef(null);
   const [isDragging, setIsDragging] = useState(false);
-  // NEW: Local state to manage the text in the input box
   const [inputValue, setInputValue] = useState(Math.round(value).toString());
   const size = 160;
   const radius = 70;
   const handlePointClick = (e, val) => { e.stopPropagation(); onChange(val); };
 
-  // NEW: useEffect to sync the input box when the slider is dragged
   useEffect(() => {
     setInputValue(Math.round(value).toString());
   }, [value]);
 
-  // NEW: Handlers to manage typing in the input, validating, and submitting
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
   };
@@ -156,15 +149,15 @@ const TiltSlider = ({ value, onChange }) => {
         <div className="w-4 h-4 bg-cyan-500 rounded-full absolute cursor-pointer border border-white shadow-md z-20" style={{ left: `${handleX - 8}px`, top: `${handleY - 8}px` }} />
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
           <div className="relative w-14 h-14 flex items-center justify-center">
-             <div className="absolute rounded-l-full flex" style={{ left: '-8px', top: '50%', transform: `translateY(-50%) rotate(${redLineRotation}deg)`, transformOrigin: '100% 50%', transition: 'transform 100ms' }}>
-              <Icon className='text-red-500' icon="oi:arrow-top" width="8" height="8" />
-               <Icon icon="ph:video-camera-light" width="56" height="56" className="text-gray-800 rotate-180 ml-[-16px]" />
-             </div>
+              <div className="absolute rounded-l-full flex" style={{ left: '-8px', top: '50%', transform: `translateY(-50%) rotate(${redLineRotation}deg)`, transformOrigin: '100% 50%', transition: 'transform 100ms' }}>
+                {/* Adjusted positioning for the arrow icon */}
+                <Icon className='text-red-500 absolute -right-2 top-1/2 -translate-y-1/2 rotate-90' icon="oi:arrow-top "  width="8" height="8" />
+                <Icon icon="ph:video-camera-light" width="56" height="56" className="text-gray-800 rotate-180 ml-[-10px]" /> {/* Adjusted ml here */}
+              </div>
           </div>
         </div>
       </div>
       <div className="flex flex-col items-center">
-        {/* MODIFIED: Input is now interactive */}
         <div className="relative">
           <input 
             type="text" 

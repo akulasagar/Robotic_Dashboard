@@ -40,14 +40,15 @@ const MqttDashboard = () => {
   }, [messages, setRobotControlsData]);
 
   return (
-    <div className="bg-gray-500 w-full text-white p-4">
-      <h2>🤖 Robot Live Data</h2>
-      <ul>
-        {messages.map((m, i) => (
-          <li key={i}>{m}</li>
-        ))}
-      </ul>
-    </div>
+    <></>
+    // <div className="bg-gray-500 w-full text-white p-4">
+    //   <h2>🤖 Robot Live Data</h2>
+    //   <ul>
+    //     {messages.map((m, i) => (
+    //       <li key={i}>{m}</li>
+    //     ))}
+    //   </ul>
+    // </div>
   );
 };
 

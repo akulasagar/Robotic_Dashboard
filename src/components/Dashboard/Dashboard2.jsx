@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import L from "leaflet";
@@ -7,7 +7,6 @@ import markerIcon from "leaflet/dist/images/marker-icon.png";
 import markerShadow from "leaflet/dist/images/marker-shadow.png";
 import { RobotContext } from "../../context/RobotContext";
 // import { RoboEventsData } from "../../utils/RoboEventsData";
-import RobotControls from "./RobotControls";
 import IconsData from "../IconsData";
 
 const position = [17.457065, 78.370719];
@@ -21,8 +20,14 @@ const customIcon = L.icon({
 });
 
 export default function Dashboard2() {
-  const [showControls, setShowControls] = useState(false);
   const { selectedRobot } = useContext(RobotContext);
+  console.log('selectedRobot ==== ', selectedRobot.status);
+
+  if (!selectedRobot) return (
+    <section className="flex justify-center items-center h-[300px]">
+      <p className="text-gray-500 text-lg">No Robot Selected</p>
+    </section>
+  )
 
   const videoMap = {
     idle: "/Idle-video.mp4",
@@ -39,14 +44,6 @@ export default function Dashboard2() {
     }, [map]);
     return null;
   };
-
-  if (!selectedRobot) {
-    return (
-      <section className="flex justify-center items-center h-[300px]">
-        <p className="text-gray-500 text-lg">No Robot Selected</p>
-      </section>
-    );
-  }
 
   const maxSpeed = 100; // fixed max speed
   const avgSpeed = Number(selectedRobot.avg_speed) || 0;
@@ -324,13 +321,15 @@ export default function Dashboard2() {
                     />
                     <p>{selectedRobot.roboid}</p>
                   </div>
-                  <p>{each.time_date}</p>
-                  <p>{each.event}</p>
+                  <p className="text-[14px]">{each.time_date}</p>
+                  <p className="text-[14px]">{each.event}</p>
                   <div
                     to=""
-                    className="w-[100px] h-[30px] text-[14px] border-1 border-gray-400 rounded-[100px] flex items-center justify-center"
+                    className="w-[100px] self-auto h-[30px] text-[14px] border-1 border-gray-400 rounded-[100px] flex items-center justify-start p-2"
                   >
-                    <span className="h-2.5 w-2.5 bg-green-700 rounded-[50%] mr-2"></span>
+                    <span className="h-2.5 w-2.5 rounded-[50%] mr-2"
+                      style={{backgroundColor: each.status === 'idle' ? 'orange' : each.status === 'patrolling' ? 'green' : 'blue' }}
+                    ></span>
                     <p>{each.status}</p>
                   </div>
                 </div>
@@ -344,7 +343,6 @@ export default function Dashboard2() {
 
           {/* Video Feed / Manual Control */}
           <div className=" max-h-[665px]  w-full rounded-[14px] bg-white p-[24px] ">
-            
             <h1 className="text-[22px] font-semibold ">
               Video Feed / Manual Control
             </h1>
@@ -363,8 +361,13 @@ export default function Dashboard2() {
                 />
               </div>
               <div className="w-full flex justify-center items-center ml-10">
-      <Link to="/controls" className=" rounded bg-[#1F9AB0] px-4 py-2 text-white">Manual Control</Link>
-</div>
+                <Link
+                  to="/controls"
+                  className=" rounded bg-[#1F9AB0] px-4 py-2 text-white"
+                >
+                  Manual Control
+                </Link>
+              </div>
             </div>
           </div>
         </div>
@@ -372,11 +375,11 @@ export default function Dashboard2() {
 
       {/* Map */}
       <div className=" max-w-[445px] gap-[10px] w-full  sticky top-[20px] self-start mr-auto">
-        
-        
-       
         <div className="w-full h-[665px] bg-gray-200 rounded-[32px] overflow-hidden">
-          <button className=" z-2000 absolute border bg-white rounded-[100px] p-2 right-2 bottom-2 inline-flex text-[12px] "> Customise map{IconsData.location}</button>
+          <button className=" z-2000 absolute border bg-white rounded-[100px] p-2 right-2 bottom-2 inline-flex text-[12px] ">
+            {" "}
+            Customise map{IconsData.location}
+          </button>
           <MapContainer
             center={position}
             zoom={13}

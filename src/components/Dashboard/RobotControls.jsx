@@ -1,7 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import IconsData from "../IconsData";
 import PanTiltControl from "./PanTiltControl";
-import MqttDashboard from "./MqttDashboard";
 import { Link } from "react-router-dom";
 
 const RobotComds = {
@@ -37,8 +36,8 @@ const initialUserRobotControls = {
   zoom: 0,
 };
 
-const RemoteControl = (props) => {
-  const { ControlModeOn } = props;
+const RemoteControl = () => {
+  const ControlModeOn = true;
   const [status, setStatus] = useState("Connecting...");
   const [userRobotControls, setUserRobotControls] = useState(
     initialUserRobotControls
@@ -130,39 +129,40 @@ const RemoteControl = (props) => {
   };
 
   // Connect to AWS IoT
-  const connectToIot = async () => {
-    try {
-      await window.AWS.config.credentials.getPromise();
+  // const connectToIot = async () => {
+  //   try {
+  //     await window.AWS.config.credentials.getPromise();
 
-      if (iotClient.current) {
-        setStatus("Already Connected to AWS IoT");
-        addLog("Already connected to AWS IoT Core.", "warning");
-        return;
-      }
+  //     if (iotClient.current) {
+  //       setStatus("Already Connected to AWS IoT");
+  //       addLog("Already connected to AWS IoT Core.", "warning");
+  //       return;
+  //     }
 
-      iotClient.current = new window.AWS.IotData({
-        endpoint: IOT_ENDPOINT,
-        region: REGION,
-      });
+  //     iotClient.current = new window.AWS.IotData({
+  //       endpoint: IOT_ENDPOINT,
+  //       region: REGION,
+  //     });
 
-      setStatus("Connected!");
-      addLog("Successfully connected to AWS IoT Core.", "success");
-    } catch (err) {
-      console.error("Connection failed:", err);
-      setStatus("Connection failed.");
-      addLog(`Connection failed: ${err.message}. Retrying in 5s...`, "error");
-      setTimeout(connectToIot, 5000);
-    }
-  };
+  //     setStatus("Connected!");
+  //     addLog("Successfully connected to AWS IoT Core.", "success");
+  //   } catch (err) {
+  //     console.error("Connection failed:", err);
+  //     setStatus("Connection failed.");
+  //     addLog(`Connection failed: ${err.message}. Retrying in 5s...`, "error");
+  //     setTimeout(connectToIot, 5000);
+  //   }
+  // };
 
   // Publish a command
   const publishCommand = (command) => {
-    console.log("publishing command -> ", command, userRobotControls);
+    // console.log("publishing command -> ", command);
+    // console.log('Robot is : ', userRobotControls);
 
-    // if (!userRobotControls.robotOn) {
-    //   addLog("Robot is OFF. Command skipped.", "warning");
-    //   return;
-    // }
+    if (!userRobotControls.robotOn) {
+      addLog("Robot is OFF. Command skipped.", "warning");
+      return;
+    }
 
     if (!iotClient.current) {
       addLog("IoT client not connected. Please wait...", "warning");
@@ -231,35 +231,36 @@ const RemoteControl = (props) => {
   return (
     <>
       <div className="flex flex-col  bg-gray300 w-full h-auto text-white">
-  <div className="flex justify-between items-center px-10   ">
-            {/* Connection Status */}
-            <div className="bg-gray-800 px-6 mt-2 py-3 w-auto flex self-start rounded-lg text-center shadow-md">
-              <p className="text-xs w-max">
-                Remote Access Status:{" "}
-                <span
-                  className={`font-bold ${
-                    status === "Robot Connected!"
-                      ? "text-green-400"
-                      : status === "Robot Connecting..."
-                      ? "text-yellow-400"
-                      : "text-red-400"
-                  }`}
-                >
-                  {status}
-                </span>
-              </p>
-            </div>
-            
-      
-      <Link to="/dashboard" className=" rounded bg-[#1F9AB0] px-4 py-2 text-white">Go to Automatic Mode</Link>
+        <div className="flex justify-between items-center px-10   ">
+          {/* Connection Status */}
+          <div className="bg-gray-800 px-6 mt-2 py-3 w-auto flex self-start rounded-lg text-center shadow-md">
+            <p className="text-xs w-max">
+              Remote Access Status:{" "}
+              <span
+                className={`font-bold ${
+                  status === "Robot Connected!"
+                    ? "text-green-400"
+                    : status === "Robot Connecting..."
+                    ? "text-yellow-400"
+                    : "text-red-400"
+                }`}
+              >
+                {status}
+              </span>
+            </p>
+          </div>
 
-</div>
+          <Link
+            to="/dashboard"
+            className=" rounded bg-[#1F9AB0] px-4 py-2 text-white"
+          >
+            Go to Automatic Mode
+          </Link>
+        </div>
 
         {/* Remote Control Section */}
         <section className="flex justify-between w-full items-center">
-
           <div className=" flex flex-col gap-[40px] w-[30%]">
-          
             {/* control section */}
             <div className="flex items-center justify-start ml-[70px]">
               <div className="relative">
@@ -508,7 +509,6 @@ const RemoteControl = (props) => {
           </div>
         </section>
       </div>
-      <MqttDashboard />
     </>
   );
 };

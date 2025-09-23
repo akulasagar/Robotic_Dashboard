@@ -20,7 +20,7 @@ const IconsData = {
     'camera':<Icon icon="mdi-light:camera" width="24" height="24" />,
     'arrow':<Icon icon="bxs:up-arrow" />,
     'pause':<Icon icon="quill:pause" />,
-    'play':<Icon icon="mdi:play" width="24" height="24" />,
+    'play':<Icon icon="mdi:play" />,
     'videocamera':<Icon icon="ph:video-camera-light" width="56" height="56" />,
     
     'warning':<Icon icon="material-symbols:warning-outline-rounded" width="24" height="24" />,

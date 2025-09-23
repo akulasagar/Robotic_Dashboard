@@ -39,26 +39,6 @@ export default function ManualControlpage() {
     return null;
   };
 
-  if (!selectedRobot) {
-    return (
-      <>
-        <Header />
-        <div className="flex h-[calc(100vh-80px)] items-center justify-center">
-          <Sidebar />
-          <div className="text-center">
-            <h1 className="text-2xl font-bold text-gray-700">No Robot Selected</h1>
-            <p className="text-gray-500">
-              Please go back to the dashboard and select a robot to view its controls.
-            </p>
-            <Link to="/" className="mt-4 inline-block rounded bg-blue-500 px-4 py-2 text-white">
-              Go to Dashboard
-            </Link>
-          </div>
-        </div>
-      </>
-    );
-  }
-
   const robotPosition = selectedRobot.position || position;
 
   // Save or update label
@@ -103,20 +83,43 @@ export default function ManualControlpage() {
       lastScrollY = currentScrollY;
     };
 
-    console.log("Adding scroll listener");
+    // console.log("Adding scroll listener");
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, [window.scrollY]);
 
-  
-  return (
+  return !selectedRobot ? (
+    <>
+      <Header />
+      <div className="flex h-[calc(100vh-80px)] items-center justify-center">
+        <Sidebar />
+        <div className="text-center">
+          <h1 className="text-2xl font-bold text-gray-700">
+            No Robot Selected
+          </h1>
+          <p className="text-gray-500">
+            Please go back to the dashboard and select a robot to view its
+            controls.
+          </p>
+          <Link
+            to="/"
+            className="mt-4 inline-block rounded bg-blue-500 px-4 py-2 text-white"
+          >
+            Go to Dashboard
+          </Link>
+        </div>
+      </div>
+    </>
+  ) : (
     <>
       {/* Toggle header visibility with CSS */}
       <div
         ref={headerRef}
-        className={`${hideHeader ? "-translate-y-full hidden" : "translate-y-0"}`}
+        className={`${
+          hideHeader ? "-translate-y-full hidden" : "translate-y-0"
+        }`}
       >
-        <Header sticky={false} />
+        <Header />
       </div>
 
       <main className="flex w-full flex-col gap-[10px]">
@@ -154,13 +157,18 @@ export default function ManualControlpage() {
                   onClick={() => setIsCustomizeOpen((prev) => !prev)}
                   className="absolute right-2 top-2 z-1300 border bg-white rounded-full px-3 py-1 shadow-md text-sm"
                 >
-                  {isCustomizeOpen ? "Exit" : <>Customize map {IconsData.location}</>}
+                  {isCustomizeOpen ? (
+                    "Exit"
+                  ) : (
+                    <>Customize map {IconsData.location}</>
+                  )}
                 </button>
 
                 {/* Map */}
                 <div
-                  className={`overflow-hidden rounded-[32px] bg-gray-200 transition-all duration-300 ${isCustomizeOpen ? "h-[500px]" : "h-[calc(100vh-80px)]"
-                    }`}
+                  className={`overflow-hidden rounded-[32px] bg-gray-200 transition-all duration-300 ${
+                    isCustomizeOpen ? "h-[500px]" : "h-[calc(100vh-80px)]"
+                  }`}
                 >
                   <MapContainer
                     center={robotPosition}
@@ -179,7 +187,6 @@ export default function ManualControlpage() {
                   </MapContainer>
                 </div>
 
-
                 {/* Extra Card (when customizing) */}
                 {isCustomizeOpen && (
                   <div className="mt-3 p-4 border rounded-2xl shadow-md bg-white h-[320px] flex flex-col">
@@ -194,10 +201,11 @@ export default function ManualControlpage() {
                       />
                       <button
                         onClick={handleSave}
-                        className={`px-4 py-1 rounded-full text-white transition ${currentInput.trim()
+                        className={`px-4 py-1 rounded-full text-white transition ${
+                          currentInput.trim()
                             ? "bg-teal-500 hover:bg-teal-600"
                             : "bg-gray-400 cursor-not-allowed"
-                          }`}
+                        }`}
                         disabled={!currentInput.trim()}
                       >
                         Save
@@ -233,7 +241,6 @@ export default function ManualControlpage() {
                     </ul>
                   </div>
                 )}
-
               </div>
             </div>
           </section>

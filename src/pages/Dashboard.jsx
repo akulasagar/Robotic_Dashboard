@@ -31,7 +31,7 @@ export default function Dashboard() {
                 value={selectedRobot?.name || ""}
                 onChange={handleRobotChange}
               >
-                {console.log("robots List Data", robots)}
+                {/* {console.log("robots List Data", robots)} */}
                 {robots.map((robot, index) => (
                   <option key={index} value={robot.name}>
                     {robot.name}

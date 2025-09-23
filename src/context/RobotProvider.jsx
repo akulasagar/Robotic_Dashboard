@@ -7,6 +7,7 @@ import { RobotContext } from "./RobotContext";
 const safeParse = (value, fallback) => {
   try {
     if (!value || value === "undefined") return fallback;
+    // console.log('value :', JSON.parse(value))
     return JSON.parse(value);
   } catch (err) {
     console.warn("⚠️ Failed to parse storage value:", err);
@@ -24,9 +25,6 @@ export const RobotProvider = ({ children }) => {
     safeParse(sessionStorage.getItem("allRobots"), RoboData2 || [])
   );
 
-  // ❌ REMOVED: The separate 'robotControlsData' state is no longer needed.
-  // const [robotControlsData, setRobotControlsData] = useState(...);
-
   const [selectedRobot, setSelectedRobot] = useState(() =>
     safeParse(localStorage.getItem("selectedRobot"), null)
   );
@@ -39,28 +37,32 @@ export const RobotProvider = ({ children }) => {
   }, [selectedRobot]);
 
   // Format robot live data into standard object (no changes needed here)
-  const formatRobotData = (newData) => ({
-    s_no: newData.sNo || "SRV-00",
-    roboid: newData.roboId || "Robot-1",
-    type: newData.robotType || "SRV",
-    status: newData.status || "-",
-    name: newData.robotName || "Surveillance Robot-Live",
-    image: newData.robotImg || "/SurvellianceRobo1.png",
-    battery: newData.batteryStatus || "72",
-    location: newData.robotLocation || "Anvi Tech Park",
-    health: newData.robotHealth || "50%",
-    temperature: newData.temp || "23°c",
-    alerts: newData.alerts || [],
-    avg_speed: newData.avgSpeed || "50",
-    current_speed: newData.currentSpeed || "0",
-    signal_strength: newData.signalStrength || "Good",
-    event_logs: [],
-  });
+  const formatRobotData = (newData) => {
+    const {map_data, robot_status} = newData;
+    console.log('Live newData : ', newData.robot_status.status);
+    if (!newData) return;
+    return {
+      s_no: robot_status.sNo || "SRV-00",
+      roboid: robot_status.roboId || "Robot-1",
+      type: robot_status.robotType || "SRV",
+      status: robot_status.status || "Unknown",
+      name: robot_status.robotName || "Surveillance Robot-Live",
+      image: robot_status.robotImg || "/SurvellianceRobo1.png",
+      battery: robot_status.batteryStatus || "72",
+      location: robot_status.robotLocation || "Anvi Tech Park",
+      health: robot_status.robotHealth || "50%",
+      temperature: robot_status.temp || "23°c",
+      alerts: robot_status.alerts || [],
+      avg_speed: robot_status.avgSpeed || "50",
+      current_speed: robot_status.currentSpeed || "0",
+      signal_strength: robot_status.signalStrength || "Good",
+      event_logs: [],
+      map_data,
+  }};
 
   // Update robots with live data
   const updateRobotControlsData = (newData) => {
     const formatted = formatRobotData(newData);
-
     setRobots((prev) => {
       const idx = prev.findIndex((r) => r.roboid === formatted.roboid);
 
@@ -73,7 +75,7 @@ export const RobotProvider = ({ children }) => {
           formatted.event_logs = [
             {
               time_date: new Date().toLocaleString(),
-              event: `Status changed from ${oldRobot.status} → ${formatted.status}`,
+              event: `${oldRobot.status} → ${formatted.status}`,
               status: formatted.status,
             },
             ...oldRobot.event_logs,
@@ -111,13 +113,15 @@ export const RobotProvider = ({ children }) => {
         formatted.event_logs = [
           {
             time_date: new Date().toLocaleString(),
-            event: "Robot registered in system",
+            event: formatted.status,
             status: formatted.status,
           },
         ];
         return [formatted, ...prev];
       }
     });
+
+    setSelectedRobot(formatted);
 
     // ❌ REMOVED: No longer need to set the separate robotControlsData state.
     // setRobotControlsData(formatted);

@@ -328,7 +328,7 @@ export default function Dashboard2() {
                     className="w-[100px] self-auto h-[30px] text-[14px] border-1 border-gray-400 rounded-[100px] flex items-center justify-start p-2"
                   >
                     <span className="h-2.5 w-2.5 rounded-[50%] mr-2"
-                      style={{backgroundColor: each.status === 'idle' ? 'orange' : each.status === 'patrolling' ? 'green' : 'blue' }}
+                      style={{ backgroundColor: each.status === 'idle' ? 'orange' : each.status === 'patrolling' ? 'green' : 'blue' }}
                     ></span>
                     <p>{each.status}</p>
                   </div>
@@ -343,7 +343,7 @@ export default function Dashboard2() {
 
           {/* Video Feed / Manual Control */}
           <div className=" h-[665px]  w-full rounded-[14px] bg-white p-[24px] " id="video-feed">
-            
+
             <h1 className="text-[22px] font-semibold ">
               Video Feed / Manual Control
             </h1>
@@ -361,8 +361,8 @@ export default function Dashboard2() {
                   className="rounded-2xl shadow-lg w-full h-full"
                 />
               </div>
-             
-      <Link to="/controls" className="absolute top-1.5 right-1.5 rounded-[14px] bg-transparent border border-white px-4 py-2 text-white z-200 ">Manual Control</Link>
+
+              <Link to="/controls" className="absolute top-1.5 right-1.5 rounded-[14px] bg-transparent border border-white px-4 py-2 text-white z-200 ">Manual Control</Link>
             </div>
           </div>
         </div>

@@ -189,7 +189,7 @@ export default function ManualControlpage() {
 
                 {/* Extra Card (when customizing) */}
                 {isCustomizeOpen && (
-                  <div className="mt-3 p-4 border rounded-2xl shadow-md bg-white h-[320px] flex flex-col">
+                  <div className="mt-3 p-4  rounded-2xl shadow-md bg-white h-[320px] flex flex-col">
                     {/* Input row */}
                     <div className="flex items-center gap-2">
                       <input
@@ -213,30 +213,37 @@ export default function ManualControlpage() {
                     </div>
 
                     {/* Saved labels list */}
-                    <ul className="mt-3 space-y-2 overflow-y-auto flex-1">
+                    <ul className="mt-3  overflow-y-auto flex-1">
                       {labels.map((label, index) => (
+                        <div className="flex">
                         <li
                           key={index}
-                          className="flex items-center justify-between border p-2 rounded-lg"
+                          className="flex items-center justify-between border p-2 rounded-lg w-[70%]"
                         >
                           <span>
                             {index + 1}. {label}
                           </span>
-                          <div className="flex gap-2">
-                            <button
+                          <button
                               onClick={() => handleEdit(index)}
-                              className="text-blue-500 hover:underline"
+                            className="px-4 py-1 rounded-full text-white transition "
+                      
                             >
                               Edit
                             </button>
+                         
+                          
+                        </li>
+                        <div className="flex items-center">
+                           
                             <button
                               onClick={() => handleDelete(index)}
                               className="text-red-500 hover:underline"
                             >
                               Delete
                             </button>
-                          </div>
-                        </li>
+
+                        </div>
+                        </div>
                       ))}
                     </ul>
                   </div>

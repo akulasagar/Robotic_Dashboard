@@ -342,12 +342,13 @@ export default function Dashboard2() {
           </div>
 
           {/* Video Feed / Manual Control */}
-          <div className=" max-h-[665px]  w-full rounded-[14px] bg-white p-[24px] ">
+          <div className=" h-[665px]  w-full rounded-[14px] bg-white p-[24px] " id="video-feed">
+            
             <h1 className="text-[22px] font-semibold ">
               Video Feed / Manual Control
             </h1>
-            <div className="flex  ">
-              <div className="max-h-[304px] flex  max-w-[320px] w-auto h-auto rounded-[14px] bg-black p-3 relative">
+            <div className="flex flex-col relative mt-5 ">
+              <div className=" flex max-h-[565px] w-full rounded-[14px] bg-black p-3 relative">
                 <div className="flex items-center absolute">
                   <p className="h-2.5 w-2.5 bg-red-500 rounded-[50%] mr-2"></p>
                   <p className="text-white text-[14px]">REC</p>
@@ -360,14 +361,8 @@ export default function Dashboard2() {
                   className="rounded-2xl shadow-lg w-full h-full"
                 />
               </div>
-              <div className="w-full flex justify-center items-center ml-10">
-                <Link
-                  to="/controls"
-                  className=" rounded bg-[#1F9AB0] px-4 py-2 text-white"
-                >
-                  Manual Control
-                </Link>
-              </div>
+             
+      <Link to="/controls" className="absolute top-1.5 right-1.5 rounded-[14px] bg-transparent border border-white px-4 py-2 text-white z-200 ">Manual Control</Link>
             </div>
           </div>
         </div>

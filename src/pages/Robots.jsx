@@ -70,7 +70,7 @@ export default function Robots() {
 
             {/* Robots List */}
             {filteredRobots.length > 0 ? (
-              <div className="mx-2 grid grid-cols-4 w-full gap-2 shadow-sm">
+              <div className="mx-2 grid grid-cols-4 w-full gap-2 ">
                 {filteredRobots.map((each) => (
                   <div
                     key={each.roboid || each.name}

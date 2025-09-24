@@ -233,10 +233,10 @@ const RemoteControl = () => {
       <div className="flex flex-col  bg-gray300 w-full h-auto text-white">
 
         {/* Remote Control Section */}
-        <section className="flex justify-start gap-[40px] w-full items-center p-2">
-          <div className="w-[50%] flex gap-[60px]">
+        <section className="flex justify-start gap-[40px] w-full items-center p-2 ">
+          <div className="w-[50%] flex gap-[60px] ">
 
-            <div className=" flex flex-col gap-[40px] ">
+            <div className=" flex flex-col gap-[40px] pt-[25px] ">
 
               {/* control section */}
               <div className="flex items-center justify-start ml-[70px]">
@@ -286,26 +286,51 @@ const RemoteControl = () => {
                     </button>
                   </div>
                   {/* Main Circle with Controls */}
-                  <div className="controls-box rotate-45 bg-[#1F9AB0] rounded-full w-38 h-38 flex items-center justify-center flex-wrap relative">
+                  <div className="controls-box  bg-white rounded-full w-42 h-42 flex items-center border-1 border-gray-200 b justify-center flex-wrap relative">
+                       <button
+                      onClick={() => publishCommand(RobotComds.forwardLeft)}
+                      disabled={
+                        !userRobotControls.robotOn && !userRobotControls.pause
+                      }
+                    >
+                      <i className="-rotate-45 mt-[15px] ml-[15px]  text-[#1F9AB060]">
+                        {IconsData.arrow}
+                      </i>
+                    </button>
                     <button
                       onClick={() => publishCommand(RobotComds.forward)}
                       disabled={
                         !userRobotControls.robotOn && !userRobotControls.pause
                       }
                     >
-                      <i className="-rotate-45 mt-[15px] ml-[15px]">
+                      <i className=" mb-[15px]  text-[#1F9AB0]">
                         {IconsData.arrow}
                       </i>
                     </button>
-                    <button
+                     <button
                       onClick={() => publishCommand(RobotComds.forwardRight)}
                       disabled={
                         !userRobotControls.robotOn && !userRobotControls.pause
                       }
                     >
-                      <i className="rotate-0 mb-[15px] text-[#FFFFFF38]">
+                      <i className="rotate-45 mt-[15px] mr-[15px]  text-[#1F9AB060]">
                         {IconsData.arrow}
                       </i>
+                    </button>
+                   
+                    <button
+                      disabled={
+                        !userRobotControls.robotOn && !userRobotControls.pause
+                      }
+                      onClick={() => publishCommand(RobotComds.left)}
+                    >
+                      <i className="-rotate-90 mr-[15px]  text-[#1F9AB0] ">
+                        {IconsData.arrow}
+                      </i>
+                    </button>
+                      {/* Hidden button not to use */}
+                    <button className="text-[40px] ">
+                      <i className="-rotate-45">{IconsData.arrow}</i>
                     </button>
                     <button
                       onClick={() => publishCommand(RobotComds.right)}
@@ -313,67 +338,48 @@ const RemoteControl = () => {
                         !userRobotControls.robotOn && !userRobotControls.pause
                       }
                     >
-                      <i className="rotate-45 mt-[15px] mr-[15px]">
+                      <i className="rotate-90 ml-[15px]  text-[#1F9AB0] ">
                         {IconsData.arrow}
                       </i>
                     </button>
-                    <button
-                      onClick={() => publishCommand(RobotComds.forwardLeft)}
+                      <button
                       disabled={
                         !userRobotControls.robotOn && !userRobotControls.pause
                       }
+                      onClick={() => publishCommand(RobotComds.backwardLeft)}
                     >
-                      <i className="-rotate-90 mr-[15px] text-[#FFFFFF38]">
+                      <i className="-rotate-135 mb-[15px] ml-[15px] text-[#1F9AB060]">
                         {IconsData.arrow}
                       </i>
                     </button>
-                    {/* Hidden button not to use */}
-                    <button>
-                      <i className="-rotate-45">{IconsData.arrow}</i>
+                     <button
+                      disabled={
+                        !userRobotControls.robotOn && !userRobotControls.pause
+                      }
+                      onClick={() => publishCommand(RobotComds.backward)}
+                    >
+                      <i className="rotate-180 mt-[15px]  text-[#1F9AB0] ">
+                        {IconsData.arrow}
+                      </i>
                     </button>
+                   
+                  
                     <button
                       disabled={
                         !userRobotControls.robotOn && !userRobotControls.pause
                       }
                       onClick={() => publishCommand(RobotComds.backwardRight)}
                     >
-                      <i className="rotate-90 ml-[15px] text-[#FFFFFF38]">
+                      <i className="rotate-135 mr-[15px] mb-[15px]  text-[#1F9AB060]">
                         {IconsData.arrow}
                       </i>
                     </button>
-                    <button
-                      disabled={
-                        !userRobotControls.robotOn && !userRobotControls.pause
-                      }
-                      onClick={() => publishCommand(RobotComds.left)}
-                    >
-                      <i className="-rotate-135 ml-[15px] mb-[15px]">
-                        {IconsData.arrow}
-                      </i>
-                    </button>
-                    <button
-                      disabled={
-                        !userRobotControls.robotOn && !userRobotControls.pause
-                      }
-                      onClick={() => publishCommand(RobotComds.backwardLeft)}
-                    >
-                      <i className="rotate-180 mt-[15px] text-[#FFFFFF38]">
-                        {IconsData.arrow}
-                      </i>
-                    </button>
-                    <button
-                      disabled={
-                        !userRobotControls.robotOn && !userRobotControls.pause
-                      }
-                      onClick={() => publishCommand(RobotComds.backward)}
-                    >
-                      <i className="rotate-135 mb-[15px] mr-[15px]">
-                        {IconsData.arrow}
-                      </i>
-                    </button>
+                   
+                  
+                   
 
                     {/* Center (Pause/Stop) */}
-                    <div className="bg-white absolute overflow-hidden -rotate-45 rounded-full w-20 h-20 flex items-center justify-center align-middle">
+                    <div className="controls-pause-box bg-white absolute overflow-hidden border-1 border-gray-200  rounded-full w-20 h-20 flex items-center justify-center align-middle">
                       <button
                         disabled={!userRobotControls.robotOn}
                         onClick={() => publishCommand(RobotComds.pause)}
@@ -390,24 +396,24 @@ const RemoteControl = () => {
               <div className="flex gap-4 h-auto ml-[60px] ">
                 <button
                   onClick={() => updateRobotMic()}
-                  className="bg-[#1F9AB0] p-3 rounded-xl shadow-md cursor-pointer"
+                  className= " control-button  p-3   cursor-pointer"
                 >
-                  {IconsData.mute}
+                 <p className="text-[#1F9AB0]"> {IconsData.mute}</p>
                 </button>
                 <button
                   onClick={() => updateRobotOn()}
                   style={{
-                    backgroundColor: !userRobotControls.robotOn ? "red" : "green",
+                    backgroundColor: !userRobotControls.robotOn ? "#ff3535" : "#31ad31",
                   }}
-                  className="power-control-btn bg[#1F9AB0] p-3 rounded-xl shadow-md cursor-pointer"
+                  className="power-control-btn  p-3  control-button cursor-pointer"
                 >
                   {IconsData.power}
                 </button>
                 <button
                   onClick={() => updateRobotCam()}
-                  className="bg-[#1F9AB0] p-3 rounded-xl shadow-md cursor-pointer"
+                  className=" control-button  p-3   cursor-pointer"
                 >
-                  {IconsData.camera}
+                  <p className="text-[#1F9AB0]">{IconsData.camera}</p>
                 </button>
               </div>
             </div>
@@ -458,7 +464,7 @@ const RemoteControl = () => {
                   w-6 h-6 rounded-full flex items-center justify-center transition-all duration-300
                   ${isSelected
                                 ? "bg-blue-500 ring-2 ring-white"
-                                : "bg-gray-200 border border-gray-400"
+                                : "bg-transparent border border-gray-400"
                               }
                 `}
                           >
@@ -480,9 +486,9 @@ const RemoteControl = () => {
             </div>
           </div>
 
-          <div className="w-[50%] justify-center h-full flex flex-col gap-5">
-            <div className="flex justify-center w-full ">
-              <Link to="/dashboard" className=" rounded-[14px] bg-[#1F9AB0] px-4 py-2  text-white w-auto">Go to Automatic Mode</Link>
+          <div className="w-[50%] justify-center h-full flex flex-col ">
+            <div className="flex justify-end w-full mb-auto mt-[25px] ">
+              <Link to="/dashboard" className=" rounded-[14px] bg-white px-4 py-2 border border-[#1E9AB0] shadow-md font-semibold text-[14px] text-[#1E9AB0] w-auto">Go to Automatic Mode</Link>
             </div>
             {/* Pan Controls */}
             <div className="w-full">

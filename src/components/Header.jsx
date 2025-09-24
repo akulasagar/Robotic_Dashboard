@@ -6,7 +6,7 @@ export default function Header() {
   const isRobotsPage = location.pathname === "/";
 
   return (
-    <header className="relative flex items-center px-4 bg-white h-[80px] max-w-[1500px] ">
+    <header className="relative flex items-center px-4 bg-white h-[80px]  ">
       {/* Logo - stays left */}
       <img src="logo.png" alt="Logo" className="h40 w-40 absolute left-3" />
 

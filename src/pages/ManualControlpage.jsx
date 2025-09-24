@@ -115,9 +115,8 @@ export default function ManualControlpage() {
       {/* Toggle header visibility with CSS */}
       <div
         ref={headerRef}
-        className={`${
-          hideHeader ? "-translate-y-full hidden" : "translate-y-0"
-        }`}
+        className={`${hideHeader ? "-translate-y-full hidden" : "translate-y-0"
+          }`}
       >
         <Header />
       </div>
@@ -166,9 +165,8 @@ export default function ManualControlpage() {
 
                 {/* Map */}
                 <div
-                  className={`overflow-hidden rounded-[32px] bg-gray-200 transition-all duration-300 ${
-                    isCustomizeOpen ? "h-[500px]" : "h-[calc(100vh-80px)]"
-                  }`}
+                  className="overflow-hidden rounded-[32px] bg-gray-200 transition-all duration-300  h-[calc(110vh-80px)]"
+                    
                 >
                   <MapContainer
                     center={robotPosition}
@@ -187,67 +185,7 @@ export default function ManualControlpage() {
                   </MapContainer>
                 </div>
 
-                {/* Extra Card (when customizing) */}
-                {isCustomizeOpen && (
-                  <div className="mt-3 p-4  rounded-2xl shadow-md bg-white h-[320px] flex flex-col">
-                    {/* Input row */}
-                    <div className="flex items-center gap-2">
-                      <input
-                        type="text"
-                        value={currentInput}
-                        onChange={(e) => setCurrentInput(e.target.value)}
-                        placeholder="Enter label"
-                        className="flex-1 border rounded-full px-3 py-2 outline-none shadow"
-                      />
-                      <button
-                        onClick={handleSave}
-                        className={`px-4 py-1 rounded-full text-white transition ${
-                          currentInput.trim()
-                            ? "bg-teal-500 hover:bg-teal-600"
-                            : "bg-gray-400 cursor-not-allowed"
-                        }`}
-                        disabled={!currentInput.trim()}
-                      >
-                        Save
-                      </button>
-                    </div>
-
-                    {/* Saved labels list */}
-                    <ul className="mt-3  overflow-y-auto flex-1">
-                      {labels.map((label, index) => (
-                        <div className="flex">
-                        <li
-                          key={index}
-                          className="flex items-center justify-between border p-2 rounded-lg w-[70%]"
-                        >
-                          <span>
-                            {index + 1}. {label}
-                          </span>
-                          <button
-                              onClick={() => handleEdit(index)}
-                            className="px-4 py-1 rounded-full text-white transition "
-                      
-                            >
-                              Edit
-                            </button>
-                         
-                          
-                        </li>
-                        <div className="flex items-center">
-                           
-                            <button
-                              onClick={() => handleDelete(index)}
-                              className="text-red-500 hover:underline"
-                            >
-                              Delete
-                            </button>
-
-                        </div>
-                        </div>
-                      ))}
-                    </ul>
-                  </div>
-                )}
+               
               </div>
             </div>
           </section>

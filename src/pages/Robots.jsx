@@ -16,11 +16,18 @@ export default function Robots() {
   const filteredRobots = robots.filter(
     (robot) => robot.type === activeRobotType
   );
-
+ const getRobotCountByType = (type) => {
+    return robots.filter((robot) => robot.type === type).length;
+  };
   const handleSelectRobot = (robot) => {
     setSelectedRobot(robot); // update global context
     navigate("/dashboard"); // go to dashboard
   };
+
+   const typeCounts = RoboData1.reduce((acc, eachType) => {
+    acc[eachType.type] = robots.filter((robot) => robot.type === eachType.type).length;
+    return acc;
+  }, {});
 
   return (
     <div>
@@ -32,7 +39,9 @@ export default function Robots() {
           <div className="flex flex-col gap-y-4 w-[calc(100%-96px)] ml-[96px]">
             {/* Robot Types */}
             <div className="mx-2 grid grid-cols-4 w-full gap-2">
-              {RoboData1.map((each) => (
+              {RoboData1.map((each) => {
+                 const count = typeCounts[each.type] || 0;
+                return(
                 <div
                   key={each.type}
                   onClick={() => setActiveRobotType(each.type)}
@@ -61,11 +70,12 @@ export default function Robots() {
                           : "bg-[#E8F0E7] text-[#1B650E]"
                       }`}
                     >
-                      {each.count}
+                      {count}
                     </p>
                   </div>
                 </div>
-              ))}
+              );
+              })}
             </div>
 
             {/* Robots List */}

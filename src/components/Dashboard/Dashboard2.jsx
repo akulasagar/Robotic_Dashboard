@@ -8,6 +8,7 @@ import markerShadow from "leaflet/dist/images/marker-shadow.png";
 import { RobotContext } from "../../context/RobotContext";
 // import { RoboEventsData } from "../../utils/RoboEventsData";
 import IconsData from "../IconsData";
+import MapComponent from "./MapComponent";
 
 const position = [17.457065, 78.370719];
 const customIcon = L.icon({
@@ -62,6 +63,7 @@ export default function Dashboard2() {
   const innerOffset = innerCircumference * (1 - innerPercentage);
 
   return (
+    <>
     <section className=" flex gap-5  mt-[20px]  ">
       <div className="flex flex-col  max-w-[1250px]">
         <div className="flex gap-5">
@@ -163,7 +165,7 @@ export default function Dashboard2() {
           <div className="flex flex-col max-w-[620px] min-w-[400px] w-full gap-[10px]">
             {/* Robot Info */}
             <div className="w-full h-[275px] bg-gradient-to-r from-white from-40% to-[#5BB9C5] rounded-[32px] border-b-5 border-[#5BB9C5] flex p-3">
-              <div className="w-[60%] p-3 flex flex-col gap-4">
+              <div className="w-[60%] p-3 flex flex-col gap-[35px]">
                 <div className="pl-5">
                   <p className="text-[22px] font-semibold">
                     {selectedRobot.name}
@@ -203,7 +205,7 @@ export default function Dashboard2() {
                 </div>
               </div>
               <div className="w-[40%] flex justify-center items-center">
-                <img src={selectedRobot.image} alt="Robot" />
+                <img src="/Robo-img.png" alt="Robot" />
               </div>
             </div>
 
@@ -307,6 +309,7 @@ export default function Dashboard2() {
               <p>Status ↑↓</p>
             </div>
 
+<div className="max-h-[240px] overflow-y-auto">
             {selectedRobot.event_logs && selectedRobot.event_logs.length > 0 ? (
               selectedRobot.event_logs.map((each, index) => (
                 <div
@@ -316,7 +319,7 @@ export default function Dashboard2() {
                   <div className="flex gap-2">
                     <img
                       className="max-h-[26px] max-w-[26px]"
-                      src={selectedRobot.image}
+                      src="/SurvellianceRobo.png"
                       alt="robot"
                     />
                     <p>{selectedRobot.roboid}</p>
@@ -339,6 +342,8 @@ export default function Dashboard2() {
                 <p className="text-[20px] text-gray-500">No Event Logs</p>
               </div>
             )}
+            </div>
+         
           </div>
 
           {/* Video Feed / Manual Control */}
@@ -371,10 +376,7 @@ export default function Dashboard2() {
       {/* Map */}
       <div className=" max-w-[445px] gap-[10px] w-full  sticky top-[20px] self-start mr-auto">
         <div className="w-full h-[665px] bg-gray-200 rounded-[32px] overflow-hidden">
-          <button className=" z-2000 absolute border bg-white rounded-[100px] p-2 right-2 bottom-2 inline-flex text-[12px] ">
-            {" "}
-            Customise map{IconsData.location}
-          </button>
+         
           <MapContainer
             center={position}
             zoom={13}
@@ -393,5 +395,9 @@ export default function Dashboard2() {
         </div>
       </div>
     </section>
+    <div>
+      <MapComponent />
+    </div>
+    </>
   );
 }

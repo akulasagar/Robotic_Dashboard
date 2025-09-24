@@ -287,7 +287,7 @@ const RemoteControl = () => {
                   </div>
                   {/* Main Circle with Controls */}
                   <div className="controls-box  bg-white rounded-full w-42 h-42 flex items-center border-1 border-gray-200 b justify-center flex-wrap relative">
-                       <button
+                    <button
                       onClick={() => publishCommand(RobotComds.forwardLeft)}
                       disabled={
                         !userRobotControls.robotOn && !userRobotControls.pause
@@ -307,7 +307,7 @@ const RemoteControl = () => {
                         {IconsData.arrow}
                       </i>
                     </button>
-                     <button
+                    <button
                       onClick={() => publishCommand(RobotComds.forwardRight)}
                       disabled={
                         !userRobotControls.robotOn && !userRobotControls.pause
@@ -317,7 +317,7 @@ const RemoteControl = () => {
                         {IconsData.arrow}
                       </i>
                     </button>
-                   
+
                     <button
                       disabled={
                         !userRobotControls.robotOn && !userRobotControls.pause
@@ -328,7 +328,7 @@ const RemoteControl = () => {
                         {IconsData.arrow}
                       </i>
                     </button>
-                      {/* Hidden button not to use */}
+                    {/* Hidden button not to use */}
                     <button className="text-[40px] ">
                       <i className="-rotate-45">{IconsData.arrow}</i>
                     </button>
@@ -342,7 +342,7 @@ const RemoteControl = () => {
                         {IconsData.arrow}
                       </i>
                     </button>
-                      <button
+                    <button
                       disabled={
                         !userRobotControls.robotOn && !userRobotControls.pause
                       }
@@ -352,7 +352,7 @@ const RemoteControl = () => {
                         {IconsData.arrow}
                       </i>
                     </button>
-                     <button
+                    <button
                       disabled={
                         !userRobotControls.robotOn && !userRobotControls.pause
                       }
@@ -362,8 +362,8 @@ const RemoteControl = () => {
                         {IconsData.arrow}
                       </i>
                     </button>
-                   
-                  
+
+
                     <button
                       disabled={
                         !userRobotControls.robotOn && !userRobotControls.pause
@@ -374,9 +374,9 @@ const RemoteControl = () => {
                         {IconsData.arrow}
                       </i>
                     </button>
-                   
-                  
-                   
+
+
+
 
                     {/* Center (Pause/Stop) */}
                     <div className="controls-pause-box bg-white absolute overflow-hidden border-1 border-gray-200  rounded-full w-20 h-20 flex items-center justify-center align-middle">
@@ -396,9 +396,9 @@ const RemoteControl = () => {
               <div className="flex gap-4 h-auto ml-[60px] ">
                 <button
                   onClick={() => updateRobotMic()}
-                  className= " control-button  p-3   cursor-pointer"
+                  className=" control-button  p-3   cursor-pointer"
                 >
-                 <p className="text-[#1F9AB0]"> {IconsData.mute}</p>
+                  <p className="text-[#1F9AB0]"> {IconsData.mute}</p>
                 </button>
                 <button
                   onClick={() => updateRobotOn()}
@@ -457,7 +457,7 @@ const RemoteControl = () => {
                         <button
                           key={level}
                           onClick={() => setSpeed(level)}
-                          className="relative w-7 h-7 z-10 flex items-center justify-center rounded-full bg-white"
+                          className="relative w-7 h-7 z-10 cursor-pointer flex items-center justify-center rounded-full bg-white"
                         >
                           <div
                             className={`
@@ -503,14 +503,12 @@ const RemoteControl = () => {
             <p className="text-xs w-max">
               Remote Access Status:{" "}
               <span
-                className={`font-bold ${status === "Robot Connected!"
-                    ? "text-green-400"
-                    : status === "Robot Connecting..."
-                      ? "text-yellow-400"
-                      : "text-red-400"
+                className={`font-bold ${userRobotControls.robotOn
+                  ? "text-green-400"
+                    : "text-red-400"
                   }`}
               >
-                {status}
+                {userRobotControls.robotOn ? 'Connected' : 'Disconnected'}
               </span>
             </p>
           </div>

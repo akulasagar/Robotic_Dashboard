@@ -38,9 +38,11 @@ export const RobotProvider = ({ children }) => {
 
   // Format robot live data into standard object (no changes needed here)
   const formatRobotData = (newData) => {
-    const {map_data, robot_status} = newData;
-    console.log('Live newData : ', newData.robot_status.status);
-    if (!newData) return;
+  
+  if (!newData || !newData.robot_status) return null;
+
+ const robot_status = newData.robot_status;
+   const map_data = newData.map_data || {}; // ✅ make it safe (optional)
     return {
       s_no: robot_status.sNo || "SRV-00",
       roboid: robot_status.roboId || "Robot-1",
@@ -57,12 +59,13 @@ export const RobotProvider = ({ children }) => {
       current_speed: robot_status.currentSpeed || "0",
       signal_strength: robot_status.signalStrength || "Good",
       event_logs: [],
-      map_data,
+      map_data: map_data || null, // ✅ prevent crash
   }};
 
   // Update robots with live data
   const updateRobotControlsData = (newData) => {
-    const formatted = formatRobotData(newData);
+     const formatted = formatRobotData(newData);
+    if (!formatted) return; 
     setRobots((prev) => {
       const idx = prev.findIndex((r) => r.roboid === formatted.roboid);
 

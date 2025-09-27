@@ -129,45 +129,50 @@ const RemoteControl = () => {
   };
 
   // Connect to AWS IoT
-  // const connectToIot = async () => {
-  //   try {
-  //     await window.AWS.config.credentials.getPromise();
+  const connectToIot = async () => {
+    try {
+      await window.AWS.config.credentials.getPromise();
 
-  //     if (iotClient.current) {
-  //       setStatus("Already Connected to AWS IoT");
-  //       addLog("Already connected to AWS IoT Core.", "warning");
-  //       return;
-  //     }
+      if (iotClient.current) {
+        setStatus("Already Connected to AWS IoT");
+        addLog("Already connected to AWS IoT Core.", "warning");
+        return;
+      }
 
-  //     iotClient.current = new window.AWS.IotData({
-  //       endpoint: IOT_ENDPOINT,
-  //       region: REGION,
-  //     });
+      iotClient.current = new window.AWS.IotData({
+        endpoint: IOT_ENDPOINT,
+        region: REGION,
+      });
 
-  //     setStatus("Connected!");
-  //     addLog("Successfully connected to AWS IoT Core.", "success");
-  //   } catch (err) {
-  //     console.error("Connection failed:", err);
-  //     setStatus("Connection failed.");
-  //     addLog(`Connection failed: ${err.message}. Retrying in 5s...`, "error");
-  //     setTimeout(connectToIot, 5000);
-  //   }
-  // };
+      setStatus("Connected!");
+      addLog("Successfully connected to AWS IoT Core.", "success");
+    } catch (err) {
+      console.error("Connection failed:", err);
+      setStatus("Connection failed.");
+      addLog(`Connection failed: ${err.message}. Retrying in 5s...`, "error");
+      setTimeout(connectToIot, 5000);
+    }
+  };
 
   // Publish a command
   const publishCommand = (command) => {
-    // console.log("publishing command -> ", command);
-    // console.log('Robot is : ', userRobotControls);
+    console.log("publishing command -> ", command);
+    console.log('Robot is : ', userRobotControls);
 
     if (!userRobotControls.robotOn) {
       addLog("Robot is OFF. Command skipped.", "warning");
       return;
     }
 
-    if (!iotClient.current) {
-      addLog("IoT client not connected. Please wait...", "warning");
-      return;
-    }
+   // After (The Fix)
+if (
+  !userRobotControls.robotOn &&
+  command !== RobotComds.start &&
+  command !== RobotComds.stop
+) {
+  addLog("Robot is OFF. Command skipped.", "warning");
+  return;
+}
 
     const params = {
       topic: `${THING_NAME}/commands/movement`,
@@ -190,43 +195,43 @@ const RemoteControl = () => {
     });
   };
 
-  // useEffect(() => {
-  //   if (!ControlModeOn) return;
+  useEffect(() => {
+    if (!ControlModeOn) return;
 
-  //   const script = document.createElement("script");
-  //   script.src = "https://sdk.amazonaws.com/js/aws-sdk-2.1158.0.min.js";
-  //   script.async = true;
+    const script = document.createElement("script");
+    script.src = "https://sdk.amazonaws.com/js/aws-sdk-2.1158.0.min.js";
+    script.async = true;
 
-  //   script.onload = () => {
-  //     if (window.AWS) {
-  //       window.AWS.config.update({
-  //         region: REGION,
-  //         credentials: new window.AWS.CognitoIdentityCredentials({
-  //           IdentityPoolId: IDENTITY_POOL_ID,
-  //         }),
-  //       });
+    script.onload = () => {
+      if (window.AWS) {
+        window.AWS.config.update({
+          region: REGION,
+          credentials: new window.AWS.CognitoIdentityCredentials({
+            IdentityPoolId: IDENTITY_POOL_ID,
+          }),
+        });
 
-  //       connectToIot();
-  //     } else {
-  //       console.error("AWS SDK failed to load");
-  //     }
-  //   };
+        connectToIot();
+      } else {
+        console.error("AWS SDK failed to load");
+      }
+    };
 
-  //   document.body.appendChild(script);
+    document.body.appendChild(script);
 
-  //   return () => {
-  //     document.body.removeChild(script);
+    return () => {
+      document.body.removeChild(script);
 
-  //     if (iotClient.current) {
-  //       try {
-  //         iotClient.current = null; // AWS.IotData doesn’t need .end(), but free ref
-  //         addLog("IoT client disconnected.", "warning");
-  //       } catch (e) {
-  //         console.warn("IoT cleanup error:", e);
-  //       }
-  //     }
-  //   };
-  // }, [ControlModeOn]);
+      if (iotClient.current) {
+        try {
+          iotClient.current = null; // AWS.IotData doesn’t need .end(), but free ref
+          addLog("IoT client disconnected.", "warning");
+        } catch (e) {
+          console.warn("IoT cleanup error:", e);
+        }
+      }
+    };
+  }, [ControlModeOn]);
 
   return (
     <>

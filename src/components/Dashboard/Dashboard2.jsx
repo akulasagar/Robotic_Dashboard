@@ -8,7 +8,6 @@ import markerShadow from "leaflet/dist/images/marker-shadow.png";
 import { RobotContext } from "../../context/RobotContext";
 // import { RoboEventsData } from "../../utils/RoboEventsData";
 import IconsData from "../IconsData";
-import MapComponent from "./MapComponent";
 
 const position = [17.457065, 78.370719];
 const customIcon = L.icon({
@@ -395,9 +394,7 @@ export default function Dashboard2() {
         </div>
       </div>
     </section>
-    <div>
-      <MapComponent />
-    </div>
+   
     </>
   );
 }

@@ -3,8 +3,6 @@ import { RobotContext } from "../context/RobotContext";
 
 const MqttDashboard = () => {
   const { setRobotControlsData } = useContext(RobotContext);
-
-  // Use ref instead of state to avoid re-renders for every message
   const wsRef = useRef(null);
 
   useEffect(() => {
@@ -12,33 +10,27 @@ const MqttDashboard = () => {
     wsRef.current = ws;
 
     ws.onopen = () => {
-      console.log("✅ Connected to WebSocket backend");
+      console.log("✅ WebSocket connected");
     };
 
     ws.onmessage = (event) => {
       try {
-        const parsed = JSON.parse(event.data); // expecting JSON
-        if (parsed?.message) {
-          setRobotControlsData(parsed.message); // directly update context
-          // console.log("✅ Updated robotControlsData:", parsed.message);
-        }
+        const data = typeof event.data === "string" ? JSON.parse(event.data) : event.data;
+        console.log("📩 Live WS message:", data);
+
+        // ✅ Pass directly to provider
+        setRobotControlsData(data.message); 
+        // ^ data.message should contain { map_data, robot_status }
       } catch (err) {
         console.warn("⚠️ Could not parse WS message:", event.data, err);
       }
     };
 
-    ws.onclose = () => {
-      console.log("❌ Disconnected from WebSocket backend");
-    };
-
-    return () => {
-      if (wsRef.current) {
-        wsRef.current.close();
-      }
-    };
+    ws.onclose = () => console.log("🔌 WebSocket disconnected");
+    return () => ws.close();
   }, [setRobotControlsData]);
 
-  return null;
+  return null; // This component just sets up WebSocket connection
 };
 
 export default MqttDashboard;

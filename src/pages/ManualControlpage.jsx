@@ -10,6 +10,7 @@ import markerIcon from "leaflet/dist/images/marker-icon.png";
 import markerShadow from "leaflet/dist/images/marker-shadow.png";
 import { RobotContext } from "../context/RobotContext";
 import IconsData from "../components/IconsData";
+import RobotMapDashboard from "../components/Dashboard/RobotMapDashboard";
 
 const position = [17.457065, 78.370719];
 const customIcon = L.icon({
@@ -22,49 +23,18 @@ const customIcon = L.icon({
 });
 
 export default function ManualControlpage() {
-  const { selectedRobot } = useContext(RobotContext);
-  const headerRef = React.useRef(0);
-
-  const [hideHeader, setHideHeader] = useState(false);
-  const [isCustomizeOpen, setIsCustomizeOpen] = useState(false);
-  const [labels, setLabels] = useState([]); // stores saved labels
-  const [currentInput, setCurrentInput] = useState(""); // input value
-  const [editIndex, setEditIndex] = useState(null); // which label we are editing
-
-  const MapResizeHandler = () => {
-    const map = useMap();
-    useEffect(() => {
-      map.invalidateSize();
-    }, [map]);
-    return null;
+ const { robots, selectedRobot, setSelectedRobot } = useContext(RobotContext);
+  const handleRobotChange = (e) => {
+    const selectedName = e.target.value;
+    const foundRobot = robots.find((robot) => robot.name === selectedName);
+    setSelectedRobot(foundRobot);
   };
-
-  const robotPosition = selectedRobot.position || position;
+  const headerRef = React.useRef(0);
+  const [hideHeader, setHideHeader] = useState(false);
+  console.log("Selected Robot in Manual Control Page: ");
 
   // Save or update label
-  const handleSave = () => {
-    if (!currentInput.trim()) return;
-    if (editIndex !== null) {
-      const updated = [...labels];
-      updated[editIndex] = currentInput.trim();
-      setLabels(updated);
-      setEditIndex(null);
-    } else {
-      setLabels([...labels, currentInput.trim()]);
-    }
-    setCurrentInput("");
-  };
-
-  // Edit existing label
-  const handleEdit = (index) => {
-    setCurrentInput(labels[index]);
-    setEditIndex(index);
-  };
-
-  // Delete label
-  const handleDelete = (index) => {
-    setLabels(labels.filter((_, i) => i !== index));
-  };
+  
 
   useEffect(() => {
     let lastScrollY = window.scrollY;
@@ -121,14 +91,14 @@ export default function ManualControlpage() {
         <Header />
       </div>
 
-      <main className="flex w-full flex-col gap-[10px]">
+      <main className="flex w-full gap-[10px]">
         <section className="custom-scroll flex h-[calc(100vh-80px)] w-full overflow-y-auto overflow-x-hidden">
           <div className="mt-[18px]">
             <Sidebar />
           </div>
 
           <section className="ml-[96px] min-h-max w-[calc(100%-96px)] px-2 pb-[20px]">
-            <div className="flex w-full flex-row gap-4">
+            <div className="w-full flex md:flex-row flex-col gap-4">
               {/* Left Column */}
               <div className="flex flex-1 flex-col bg-white mt-[18px] rounded-[14px] p-[12px]">
                 <div className="flex justify-center">
@@ -150,47 +120,30 @@ export default function ManualControlpage() {
               </div>
 
               {/* Right Column */}
-              <div className="mt-[18px] relative mr-auto w-full max-w-[445px] self-start">
+              {/* <div className="mt-[18px] relative mr-auto  max-w-[445px] self-start"> */}
                 {/* Customize / Exit Button */}
-                <button
-                  onClick={() => setIsCustomizeOpen((prev) => !prev)}
-                  className="absolute right-2 top-2 z-1300 border bg-white rounded-full px-3 py-1 shadow-md text-sm"
-                >
-                  {isCustomizeOpen ? (
-                    "Exit"
-                  ) : (
-                    <>Customize map {IconsData.location}</>
-                  )}
-                </button>
+          
 
                 {/* Map */}
                 <div
-                  className="overflow-hidden rounded-[32px] bg-gray-200 transition-all duration-300  h-[calc(110vh-80px)]"
+                  className=""
                     
                 >
-                  <MapContainer
-                    center={robotPosition}
-                    zoom={13}
-                    scrollWheelZoom={true}
-                    className="h-full w-full rounded-[32px]"
-                  >
-                    <MapResizeHandler />
-                    <TileLayer
-                      attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> contributors'
-                      url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                    />
-                    <Marker position={robotPosition} icon={customIcon}>
-                      <Popup>{selectedRobot.location}</Popup>
-                    </Marker>
-                  </MapContainer>
+                 <RobotMapDashboard />
                 </div>
 
                
               </div>
-            </div>
+            {/* </div> */}
+            
+      
+   
           </section>
+          
         </section>
+        
       </main>
+      
     </>
   );
 }

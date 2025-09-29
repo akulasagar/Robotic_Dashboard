@@ -24,7 +24,8 @@ const IconsData = {
     'videocamera':<Icon icon="ph:video-camera-light" width="56" height="56" />,
     
     'warning':<Icon icon="material-symbols:warning-outline-rounded" width="24" height="24" />,
-    'profile':<Icon icon="radix-icons:person" width="15" height="15" />
+    'profile':<Icon icon="radix-icons:person" width="15" height="15" />,
+    'clock':<Icon icon="tabler:clock" width="14" height="14" />
 }
 
 export default IconsData;

@@ -74,9 +74,14 @@ export const RoboData2 = [
     health: "90%",
     temperature: "20°c",
     alerts: [
-      "Motion detected Unauthorized moment in sector....",
-      "Motion detected Unauthorized moment in sector....",
-      "Motion detected Unauthorized moment in sector....",
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {}
+     
     ],
     avg_speed: "50",
     current_speed: "20",

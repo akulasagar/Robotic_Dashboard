@@ -25,7 +25,16 @@ const IconsData = {
     
     'warning':<Icon icon="material-symbols:warning-outline-rounded" width="24" height="24" />,
     'profile':<Icon icon="radix-icons:person" width="15" height="15" />,
-    'clock':<Icon icon="tabler:clock" width="14" height="14" />
+    'clock':<Icon icon="tabler:clock" width="14" height="14" />,
+    'temperaturelow':<Icon icon="tabler:temperature-snow" width="24" height="24" />,
+    'temperaturehigh':<Icon icon="mingcute:high-temperature-line" width="24" height="24" />,
+    'connection':<Icon icon="mdi:wifi-off" width="24" height="24" />,
+    'Info':<Icon icon="lucide:info" width="24" height="24" />,
+    'battery2':<Icon icon="tabler:battery-1" width="24" height="24" />,
+    'face':<Icon icon="lucide:scan-face" width="24" height="24" />,
+    'car':<Icon icon="mdi:car-sports" width="24" height="24" />,
+    'plate':<Icon icon="icon-park-outline:notes" width="48" height="48" />,
+    
 }
 
 export default IconsData;

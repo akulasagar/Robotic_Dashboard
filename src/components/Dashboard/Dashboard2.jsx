@@ -8,6 +8,7 @@ import markerShadow from "leaflet/dist/images/marker-shadow.png";
 import { RobotContext } from "../../context/RobotContext";
 // import { RoboEventsData } from "../../utils/RoboEventsData";
 import IconsData from "../IconsData";
+import RecentAlertsCard from "./RecentAlertscard";
 
 const position = [17.457065, 78.370719];
 const customIcon = L.icon({
@@ -209,7 +210,7 @@ export default function Dashboard2() {
             </div>
 
             {/* Recent ALerts Card */}
-            <div className=" w-full h-[380px]  bg-white rounded-[16px] p-3 flex flex-col gap-[26px]">
+            {/* <div className=" w-full h-[380px]  bg-white rounded-[16px] p-3 flex flex-col gap-[26px]">
               <span className="flex justify-between px-2 text-[22px] font-semibold">
                 <p>Recent Alerts</p>
               </span>
@@ -284,7 +285,8 @@ export default function Dashboard2() {
                   </span>
                 </div>
               </div>
-            </div>
+            </div> */}
+            <RecentAlertsCard/>
           </div>
         </div>
 

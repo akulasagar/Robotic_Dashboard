@@ -4,13 +4,13 @@ export const SidebarData = {
   Profilebox: {
     user_name: "User Name",
     profile_img: "",
-    link: "",
+    link: "/profile",
   },
   Mainmenu: [
     {
       icon: IconsData["overall-dashbaord"],
       label: "Overall Dashboard",
-      link: "",
+      link: "/dashboard",
     },
     {
       icon: IconsData["robot-face"],
@@ -20,24 +20,24 @@ export const SidebarData = {
     {
       icon: IconsData["alert-bell"],
       label: "Alerts",
-      link: "",
+      link: "/alerts",
     },
     {
       icon: IconsData.logs,
       label: "Robot Logs",
-      link: "",
+      link: "/logs",
     },
   ],
   Settings: [
     {
       icon: IconsData.info,
       label: "Help/Support",
-      link: "",
+      link: "/help_support",
     },
     {
       icon: IconsData.settings,
       label: "Settings",
-      link: "",
+      link: "/settings",
     },
   ],
 };

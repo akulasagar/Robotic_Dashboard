@@ -12,8 +12,7 @@ const eventConfig = {
     "Person Detection": { icon: IconsData.profile, color: "bg-blue-600" },
     "Face Recognition": { icon: IconsData.face, color: "bg-purple-600" },
     "Car Detection": { icon: IconsData.car, color: "bg-green-600" },
-    "Number Plate Recognition": { icon: IconsData.plate, color: "bg-[#F59E0B]" },
-   
+    "Number Plate Recognition": { icon: IconsData.plate, color: "bg-[#F59E0B]" },   
 };
 
 // Helper function to format the date
@@ -154,7 +153,7 @@ export default function Events() {
                                 )}
                             </div>
                         </div>
-                        <VideoStreaming/>
+                        <VideoStreaming />
                     </section>
 
                 </section>

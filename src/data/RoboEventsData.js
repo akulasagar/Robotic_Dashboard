@@ -23,6 +23,4 @@
 //         event:"Idle",
 //         status:"Normal"
 //     },
-
-    
 // ]

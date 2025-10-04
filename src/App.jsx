@@ -1,7 +1,3 @@
-// 
-
-
-
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./App.css";
 
@@ -10,11 +6,12 @@ import Robots from "./pages/Robots";
 import Dashboard from "./pages/Dashboard";
 import Alerts from "./pages/Alerts";
 import Events from "./pages/Events";
-import ManualControlpage from "./pages/ManualControlpage";
+import Control from "./pages/Control";
 
 import { RobotContext } from "./context/RobotContext";
 import { useContext, useEffect, useRef } from "react";
 import MqttDashboard from "./components/MqttDashboard";
+import MapManagement from "./pages/MapManagement";
 
 const App = () => {
   const iotClient = useRef(null);
@@ -99,7 +96,8 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/events" element={<Events />} />
         <Route path="/alerts" element={<Alerts />} />
-        <Route path="/controls" element={<ManualControlpage />} />
+        <Route path="/controls" element={<Control />} />
+        <Route path="/mapmanagement" element={<MapManagement />} />
       </Routes>
       <MqttDashboard />
     </Router>

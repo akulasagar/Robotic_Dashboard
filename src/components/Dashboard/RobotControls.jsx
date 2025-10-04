@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import IconsData from "../IconsData";
 import PanTiltControl from "./PanTiltControl";
 import { Link } from "react-router-dom";
@@ -38,7 +38,6 @@ const initialUserRobotControls = {
 
 const RemoteControl = () => {
   const ControlModeOn = true;
-  const [status, setStatus] = useState("Connecting...");
   const [userRobotControls, setUserRobotControls] = useState(
     initialUserRobotControls
   );
@@ -60,23 +59,14 @@ const RemoteControl = () => {
   //   const {ControlModeOn} = props;
 
   const updateRobotOn = () => {
-    console.log("before:", userRobotControls);
+    // console.log("before:", userRobotControls);
 
     setUserRobotControls((prev) => {
       const newState = { ...prev, robotOn: !prev.robotOn, pause: !prev.pause };
-      console.log("after (inside setState):", newState);
+      // console.log("after (inside setState):", newState);
       return newState;
     });
   };
-
-  // Fire publishCommand whenever robotOn changes
-  useEffect(() => {
-    if (userRobotControls.robotOn) {
-      publishCommand(RobotComds.start, userRobotControls);
-    } else {
-      publishCommand(RobotComds.stop, userRobotControls);
-    }
-  }, [userRobotControls.robotOn]);
 
   const updateRobotCam = () => {
     setUserRobotControls((prev) => {
@@ -92,10 +82,11 @@ const RemoteControl = () => {
   const updateRobotMic = () => {
     setUserRobotControls((prev) => {
       const newState = { ...prev, mute: !prev.mute };
-      publishCommand(
-        newState.mute ? RobotComds.micOff : RobotComds.micOn,
-        newState
-      );
+      // publishCommand(
+      //   newState.mute ? RobotComds.micOff : RobotComds.micOn,
+      //   newState
+      // );
+      console.log("newState.mute : ", newState.mute);
       return newState;
     });
   };
@@ -105,12 +96,11 @@ const RemoteControl = () => {
   // console.log("Robot Control : ", userRobotControls.robotOn ? "ON" : "OFF");
   // --- AWS IoT and Cognito Configuration ---
   const REGION = "us-east-1";
-  const IDENTITY_POOL_ID = "us-east-1:c752bc7c-b58e-4d8c-9ea8-3d0f4265f9fe";
   const IOT_ENDPOINT = "ain7shdyozzxm-ats.iot.us-east-1.amazonaws.com";
   const THING_NAME = "sr1_anvi";
 
   // Add a log message
-  const addLog = (message, type = "info") => {
+  const addLog = useCallback((message, type = "info") => {
     if (!logContainerRef.current) return;
 
     const logItem = document.createElement("p");
@@ -126,53 +116,52 @@ const RemoteControl = () => {
     logContainerRef.current.appendChild(logItem);
 
     logContainerRef.current.scrollTop = logContainerRef.current.scrollHeight;
-  };
+  }, []);
 
   // Connect to AWS IoT
-  const connectToIot = async () => {
-    try {
-      await window.AWS.config.credentials.getPromise();
+  const connectToIot = useCallback(async () => {
+    if (ControlModeOn) {
+      try {
+        await window.AWS.config.credentials.getPromise();
 
-      if (iotClient.current) {
-        setStatus("Already Connected to AWS IoT");
-        addLog("Already connected to AWS IoT Core.", "warning");
-        return;
+        if (iotClient.current) {
+          addLog("Already connected to AWS IoT Core.", "warning");
+          return;
+        }
+
+        iotClient.current = new window.AWS.IotData({
+          endpoint: IOT_ENDPOINT,
+          region: REGION,
+        });
+
+        addLog("Successfully connected to AWS IoT Core.", "success");
+      } catch (err) {
+        console.error("Connection failed:", err);
+        addLog(`Connection failed: ${err.message}. Retrying in 5s...`, "error");
+        setTimeout(connectToIot, 5000);
       }
-
-      iotClient.current = new window.AWS.IotData({
-        endpoint: IOT_ENDPOINT,
-        region: REGION,
-      });
-
-      setStatus("Connected!");
-      addLog("Successfully connected to AWS IoT Core.", "success");
-    } catch (err) {
-      console.error("Connection failed:", err);
-      setStatus("Connection failed.");
-      addLog(`Connection failed: ${err.message}. Retrying in 5s...`, "error");
-      setTimeout(connectToIot, 5000);
     }
-  };
+  }, [ControlModeOn]);
 
   // Publish a command
   const publishCommand = (command) => {
-    console.log("publishing command -> ", command);
-    console.log('Robot is : ', userRobotControls);
+    // console.log("publishing command -> ", command);
+    // console.log("Robot is : ", userRobotControls);
 
     if (!userRobotControls.robotOn) {
       addLog("Robot is OFF. Command skipped.", "warning");
       return;
     }
 
-   // After (The Fix)
-if (
-  !userRobotControls.robotOn &&
-  command !== RobotComds.start &&
-  command !== RobotComds.stop
-) {
-  addLog("Robot is OFF. Command skipped.", "warning");
-  return;
-}
+    // After (The Fix)
+    if (
+      !userRobotControls.robotOn &&
+      command !== RobotComds.start &&
+      command !== RobotComds.stop
+    ) {
+      addLog("Robot is OFF. Command skipped.", "warning");
+      return;
+    }
 
     const params = {
       topic: `${THING_NAME}/commands/movement`,
@@ -185,65 +174,33 @@ if (
     iotClient.current.publish(params, (err) => {
       if (err) {
         console.error("Publish failed:", err);
-        setStatus("Publish failed.");
         addLog(`Publish failed for '${command}': ${err.message}`, "error");
       } else {
-        setStatus("Command sent!");
         addLog(`Command '${command}' published successfully.`, "success");
-        setTimeout(() => setStatus("Connected!"), 1000);
       }
     });
   };
 
+  // Fire publishCommand whenever robotOn changes
   useEffect(() => {
-    if (!ControlModeOn) return;
+    // console.log('2=======');
+    if (userRobotControls.robotOn) {
+      publishCommand(RobotComds.start, userRobotControls);
+    } else {
+      publishCommand(RobotComds.stop, userRobotControls);
+    }
 
-    const script = document.createElement("script");
-    script.src = "https://sdk.amazonaws.com/js/aws-sdk-2.1158.0.min.js";
-    script.async = true;
-
-    script.onload = () => {
-      if (window.AWS) {
-        window.AWS.config.update({
-          region: REGION,
-          credentials: new window.AWS.CognitoIdentityCredentials({
-            IdentityPoolId: IDENTITY_POOL_ID,
-          }),
-        });
-
-        connectToIot();
-      } else {
-        console.error("AWS SDK failed to load");
-      }
-    };
-
-    document.body.appendChild(script);
-
-    return () => {
-      document.body.removeChild(script);
-
-      if (iotClient.current) {
-        try {
-          iotClient.current = null; // AWS.IotData doesn’t need .end(), but free ref
-          addLog("IoT client disconnected.", "warning");
-        } catch (e) {
-          console.warn("IoT cleanup error:", e);
-        }
-      }
-    };
-  }, [ControlModeOn]);
+    if (ControlModeOn) connectToIot();
+  }, [userRobotControls.robotOn, ControlModeOn]);
 
   return (
     <>
       <div className="flex flex-col  bg-gray300 w-full h-auto text-white">
-
         {/* Remote Control Section */}
         <section className="flex justify-start gap-[40px] w-full items-center p-2 ">
-          <div className="w-[50%] flex gap-[60px] ">
-
+          <div className="w[50%] w-full flex justify-between gap-[50px]">
+            {/* control section */}
             <div className=" flex flex-col gap-[40px] pt-[25px] ">
-
-              {/* control section */}
               <div className="flex items-center justify-start ml-[70px]">
                 <div className="relative">
                   {/* Zoom Control (Left) */}
@@ -304,11 +261,37 @@ if (
                     </button>
                     <button
                       onClick={() => publishCommand(RobotComds.forward)}
+                      // onClick={() =>
+                      //   publishCommand(
+                      //     JSON.stringify({
+                      //       type: "single_line",
+                      //       name: "sfafas",
+                      //       coordinates: [
+                      //         {
+                      //           x: 299,
+                      //           y: 178,
+                      //         },
+                      //         {
+                      //           x: 348,
+                      //           y: 190,
+                      //         },
+                      //         {
+                      //           x: 339,
+                      //           y: 226,
+                      //         },
+                      //         {
+                      //           x: 327,
+                      //           y: 200,
+                      //         },
+                      //       ],
+                      //     })
+                      //   )
+                      // }
                       disabled={
                         !userRobotControls.robotOn && !userRobotControls.pause
                       }
                     >
-                      <i className=" mb-[15px]  text-[#1F9AB0]">
+                      <i className="mb-[15px] text-[#1F9AB0] scale-140">
                         {IconsData.arrow}
                       </i>
                     </button>
@@ -329,7 +312,7 @@ if (
                       }
                       onClick={() => publishCommand(RobotComds.left)}
                     >
-                      <i className="-rotate-90 mr-[15px]  text-[#1F9AB0] ">
+                      <i className="-rotate-90 mr-[15px] text-[#1F9AB0] scale-140">
                         {IconsData.arrow}
                       </i>
                     </button>
@@ -343,7 +326,7 @@ if (
                         !userRobotControls.robotOn && !userRobotControls.pause
                       }
                     >
-                      <i className="rotate-90 ml-[15px]  text-[#1F9AB0] ">
+                      <i className="rotate-90 ml-[15px] text-[#1F9AB0] scale-140">
                         {IconsData.arrow}
                       </i>
                     </button>
@@ -363,11 +346,10 @@ if (
                       }
                       onClick={() => publishCommand(RobotComds.backward)}
                     >
-                      <i className="rotate-180 mt-[15px]  text-[#1F9AB0] ">
+                      <i className="rotate-180 mt-[15px] text-[#1F9AB0] scale-140">
                         {IconsData.arrow}
                       </i>
                     </button>
-
 
                     <button
                       disabled={
@@ -379,9 +361,6 @@ if (
                         {IconsData.arrow}
                       </i>
                     </button>
-
-
-
 
                     {/* Center (Pause/Stop) */}
                     <div className="controls-pause-box bg-white absolute overflow-hidden border-1 border-gray-200  rounded-full w-20 h-20 flex items-center justify-center align-middle">
@@ -400,22 +379,33 @@ if (
               {/* options buttons */}
               <div className="flex gap-4 h-auto ml-[60px] ">
                 <button
-                  onClick={() => updateRobotMic()}
-                  className=" control-button  p-3   cursor-pointer"
+                  onClick={() =>
+                    userRobotControls.robotOn ? updateRobotMic() : {}
+                  }
+                  className="control-button p-3 cursor-pointer"
+                  style={{
+                    backgroundColor: !userRobotControls.mute
+                      ? ""
+                      : "lightgreen",
+                  }}
                 >
                   <p className="text-[#1F9AB0]"> {IconsData.mute}</p>
                 </button>
                 <button
                   onClick={() => updateRobotOn()}
                   style={{
-                    backgroundColor: !userRobotControls.robotOn ? "#ff3535" : "#31ad31",
+                    backgroundColor: !userRobotControls.robotOn
+                      ? "#ff3535"
+                      : "#31ad31",
                   }}
                   className="power-control-btn  p-3  control-button cursor-pointer"
                 >
                   {IconsData.power}
                 </button>
                 <button
-                  onClick={() => updateRobotCam()}
+                  onClick={() =>
+                    userRobotControls.robotOn ? updateRobotCam() : {}
+                  }
                   className=" control-button  p-3   cursor-pointer"
                 >
                   <p className="text-[#1F9AB0]">{IconsData.camera}</p>
@@ -424,7 +414,7 @@ if (
             </div>
 
             {/* Speed Controls */}
-            <div className="w-[150px]  h-[286px]">
+            <div className="w-[120px]  h-[286px]">
               <div className="w-full h-full bg-white rounded-[8px] px-4 flex flex-col  items-center justify-start ">
                 {/* Title */}
                 <span className="font-bold text-gray-800 mb-1 ">Speed </span>
@@ -448,7 +438,7 @@ if (
                       width: "80px", // This centers the icon perfectly on the point
                     }}
                   >
-                    <img src="/Robot-speed.png" className="" />
+                    <img src="/Robot-speed.ico" className="" />
                   </div>
 
                   {/* Container for the clickable points, now positioned outside the road.
@@ -467,10 +457,11 @@ if (
                           <div
                             className={`
                   w-6 h-6 rounded-full flex items-center justify-center transition-all duration-300
-                  ${isSelected
-                                ? "bg-blue-500 ring-2 ring-white"
-                                : "bg-transparent border border-gray-400"
-                              }
+                  ${
+                    isSelected
+                      ? "bg-blue-500 ring-2 ring-white"
+                      : "bg-transparent border border-gray-400"
+                  }
                 `}
                           >
                             <span
@@ -489,17 +480,22 @@ if (
                 </div>
               </div>
             </div>
-          </div>
 
-          <div className="w-[50%] justify-center h-full flex flex-col ">
+          <div className="w[50%] mr-auto w-auto justify-center h-full flex flex-col">
             <div className="flex justify-end w-full mb-auto mt-[25px] ">
-              <Link to="/dashboard" className=" rounded-[14px] bg-white px-4 py-2 border border-[#1E9AB0] shadow-md font-semibold text-[14px] text-[#1E9AB0] w-auto">Go to Automatic Mode</Link>
+              <Link
+                to="/dashboard"
+                className=" rounded-[14px] bg-white px-4 py-2 border border-[#1E9AB0] shadow-md font-semibold text-[14px] text-[#1E9AB0] w-auto"
+              >
+                Go to Automatic Mode
+              </Link>
             </div>
             {/* Pan Controls */}
-            <div className="w-full">
-
+            <div className="w-full max-md:scale-70">
               <PanTiltControl />
             </div>
+          </div>
+          
           </div>
         </section>
         <div className="flex justify-between items-center px-10   ">
@@ -508,12 +504,11 @@ if (
             <p className="text-xs w-max">
               Remote Access Status:{" "}
               <span
-                className={`font-bold ${userRobotControls.robotOn
-                  ? "text-green-400"
-                    : "text-red-400"
-                  }`}
+                className={`font-bold ${
+                  userRobotControls.robotOn ? "text-green-400" : "text-red-400"
+                }`}
               >
-                {userRobotControls.robotOn ? 'Connected' : 'Disconnected'}
+                {userRobotControls.robotOn ? "Connected" : "Disconnected"}
               </span>
             </p>
           </div>

@@ -1,0 +1,10 @@
+.map-btns-box{
+
+}
+.map-btns-box button{
+    background-color: beige;
+    padding: 3px 5px;
+    border-radius: 5px;
+    border: 1px solid gray;
+    cursor: pointer;
+}

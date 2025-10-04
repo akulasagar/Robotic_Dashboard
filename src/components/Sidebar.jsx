@@ -1,9 +1,7 @@
-import { SidebarData } from "../utils/SidebarData.js";
 import { Link } from "react-router-dom";
-import IconsData from "./IconsData.jsx";
+import { SidebarData } from "../data/SidebarData.js";
 
 const Sidebar = () => {
-  
   return (
     // sidebar container
     <div className="sidebar group w-[80px] h-auto mx-[10px]  z-300 absolute transition-all duration-400 ">

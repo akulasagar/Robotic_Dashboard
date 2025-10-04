@@ -1,7 +1,7 @@
 // RobotProvider.jsx
 import { useEffect, useState } from "react";
-import { RoboData2 } from "../utils/RoboData2";
 import { RobotContext } from "./RobotContext";
+import { RoboData2 } from "../data/RoboData2";
 
 // Safe JSON parse helper (no changes needed here)
 const safeParse = (value, fallback) => {

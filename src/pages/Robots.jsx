@@ -1,11 +1,11 @@
-import React, { useContext, useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
-import { RoboData1 } from "../utils/RoboTopCards";
 import { RobotContext } from "../context/RobotContext";
+import { RoboData1 } from "../data/RoboTopCards";
 
-export default function Robots() {
+const Robots = () => {
   const { robots, setSelectedRobot } = useContext(RobotContext);
   const [activeRobotType, setActiveRobotType] = useState(
     RoboData1[0]?.type || ""
@@ -16,16 +16,20 @@ export default function Robots() {
   const filteredRobots = robots.filter(
     (robot) => robot.type === activeRobotType
   );
- const getRobotCountByType = (type) => {
+
+  const getRobotCountByType = (type) => {
     return robots.filter((robot) => robot.type === type).length;
   };
+  
   const handleSelectRobot = (robot) => {
     setSelectedRobot(robot); // update global context
     navigate("/dashboard"); // go to dashboard
   };
 
-   const typeCounts = RoboData1.reduce((acc, eachType) => {
-    acc[eachType.type] = robots.filter((robot) => robot.type === eachType.type).length;
+  const typeCounts = RoboData1.reduce((acc, eachType) => {
+    acc[eachType.type] = robots.filter(
+      (robot) => robot.type === eachType.type
+    ).length;
     return acc;
   }, {});
 
@@ -40,41 +44,41 @@ export default function Robots() {
             {/* Robot Types */}
             <div className="mx-2 grid grid-cols-4 w-full gap-2">
               {RoboData1.map((each) => {
-                 const count = typeCounts[each.type] || 0;
-                return(
-                <div
-                  key={each.type}
-                  onClick={() => setActiveRobotType(each.type)}
-                  className={`h-[200px] max-w-[318px] w-full rounded-[14px] shadow-sm p-[20px] cursor-pointer relative ${
-                    activeRobotType === each.type
-                      ? "bg-[#1E9AB0] text-white"
-                      : "bg-white"
-                  }`}
-                >
-                  <img
-                    className="h-[75px] w-full max-w-[75px]"
-                    src={each.image}
-                    alt={each.label}
-                  />
-                  <h1 className="text-[16px] mt-6">{each.label}</h1>
-                  <div className="flex flex-row justify-between items-center mt-2">
-                    {activeRobotType === each.type && (
-                      <span className="flex w-[50px] h-[26px] bg-[#CBDF70] items-center justify-center rounded-[119px] text-black">
-                        ADD
-                      </span>
-                    )}
-                    <p
-                      className={`w-[30px] h-[30px] rounded-[50%] flex items-center justify-center ml-auto ${
-                        activeRobotType === each.type
-                          ? "bg-[#CBDF70] text-white"
-                          : "bg-[#E8F0E7] text-[#1B650E]"
-                      }`}
-                    >
-                      {count}
-                    </p>
+                const count = typeCounts[each.type] || 0;
+                return (
+                  <div
+                    key={each.type}
+                    onClick={() => setActiveRobotType(each.type)}
+                    className={`h-[200px] max-w-[318px] w-full rounded-[14px] shadow-sm p-[20px] cursor-pointer relative ${
+                      activeRobotType === each.type
+                        ? "bg-[#1E9AB0] text-white"
+                        : "bg-white"
+                    }`}
+                  >
+                    <img
+                      className="h-[75px] w-full max-w-[75px]"
+                      src={each.image}
+                      alt={each.label}
+                    />
+                    <h1 className="text-[16px] mt-6">{each.label}</h1>
+                    <div className="flex flex-row justify-between items-center mt-2">
+                      {activeRobotType === each.type && (
+                        <span className="flex w-[50px] h-[26px] bg-[#CBDF70] items-center justify-center rounded-[119px] text-black">
+                          ADD
+                        </span>
+                      )}
+                      <p
+                        className={`w-[30px] h-[30px] rounded-[50%] flex items-center justify-center ml-auto ${
+                          activeRobotType === each.type
+                            ? "bg-[#CBDF70] text-white"
+                            : "bg-[#E8F0E7] text-[#1B650E]"
+                        }`}
+                      >
+                        {count}
+                      </p>
+                    </div>
                   </div>
-                </div>
-              );
+                );
               })}
             </div>
 
@@ -137,4 +141,7 @@ export default function Robots() {
       </main>
     </div>
   );
-}
+};
+
+
+export default Robots;
